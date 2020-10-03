@@ -5,6 +5,9 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/sarthakpranesh/HummingNote/server/handlers/note"
+	"github.com/sarthakpranesh/HummingNote/server/middleware"
+
 	"github.com/sarthakpranesh/HummingNote/server/handlers"
 
 	"github.com/gorilla/mux"
@@ -21,6 +24,7 @@ func main() {
 
 	router := mux.NewRouter()
 	router.HandleFunc("/auth", handlers.AuthHandler).Methods("POST")
+	router.HandleFunc("/auth/addnote", middleware.AuthCheck(note.AddNoteHandler)).Methods("POST")
 
 	err := http.ListenAndServe("0.0.0.0:"+os.Getenv("PORT"), router)
 	if err != nil {
