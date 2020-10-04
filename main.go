@@ -25,6 +25,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/auth", handlers.AuthHandler).Methods("POST")
 	router.HandleFunc("/auth/addnote", middleware.AuthCheck(note.AddNoteHandler)).Methods("POST")
+	router.HandleFunc("/auth/notes", middleware.AuthCheck(note.GetNotesHandler)).Methods("GET")
 
 	err := http.ListenAndServe("0.0.0.0:"+os.Getenv("PORT"), router)
 	if err != nil {
