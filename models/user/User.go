@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/sarthakpranesh/HummingNote/server/connect"
+	"github.com/sarthakpranesh/HummingNote/connect"
 )
 
 // User struct represents the authenticated/registered user

@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"github.com/sarthakpranesh/HummingNote/server/models/requests"
-	"github.com/sarthakpranesh/HummingNote/server/models/user"
+	"github.com/sarthakpranesh/HummingNote/models/requests"
+	"github.com/sarthakpranesh/HummingNote/models/user"
 )
 
 // Auth handles the actual logic of registering and signing in a user

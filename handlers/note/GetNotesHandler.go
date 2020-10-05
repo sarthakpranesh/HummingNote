@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/sarthakpranesh/HummingNote/server/models/responses"
+	"github.com/sarthakpranesh/HummingNote/models/responses"
 
-	"github.com/sarthakpranesh/HummingNote/server/models"
+	"github.com/sarthakpranesh/HummingNote/models"
 
-	"github.com/sarthakpranesh/HummingNote/server/models/note"
+	"github.com/sarthakpranesh/HummingNote/models/note"
 )
 
 // GetNotesHandler sends back the users notes

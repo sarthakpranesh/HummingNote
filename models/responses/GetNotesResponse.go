@@ -1,6 +1,6 @@
 package responses
 
-import "github.com/sarthakpranesh/HummingNote/server/models/note"
+import "github.com/sarthakpranesh/HummingNote/models/note"
 
 // GetNotesResponse represents the response for GetNotesHandler
 type GetNotesResponse struct {

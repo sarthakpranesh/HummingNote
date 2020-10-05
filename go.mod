@@ -1,4 +1,4 @@
-module github.com/sarthakpranesh/HummingNote/server
+module github.com/sarthakpranesh/HummingNote
 
 go 1.15
 

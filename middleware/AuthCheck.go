@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/sarthakpranesh/HummingNote/server/models"
-	"github.com/sarthakpranesh/HummingNote/server/models/user"
+	"github.com/sarthakpranesh/HummingNote/models"
+	"github.com/sarthakpranesh/HummingNote/models/user"
 )
 
 // AuthCheck makes sure if the request is authenticated or not

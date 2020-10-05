@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sarthakpranesh/HummingNote/server/models"
-	"github.com/sarthakpranesh/HummingNote/server/models/note"
+	"github.com/sarthakpranesh/HummingNote/models"
+	"github.com/sarthakpranesh/HummingNote/models/note"
 
-	"github.com/sarthakpranesh/HummingNote/server/models/requests"
+	"github.com/sarthakpranesh/HummingNote/models/requests"
 )
 
 // AddNoteHandler can be used by authenticated users to create notes

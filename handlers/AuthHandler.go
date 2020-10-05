@@ -5,11 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/sarthakpranesh/HummingNote/server/models/requests"
+	"github.com/sarthakpranesh/HummingNote/models/requests"
 
-	"github.com/sarthakpranesh/HummingNote/server/controllers"
+	"github.com/sarthakpranesh/HummingNote/controllers"
 
-	"github.com/sarthakpranesh/HummingNote/server/models"
+	"github.com/sarthakpranesh/HummingNote/models"
 )
 
 // AuthHandler handles all POST requests on the Auth route and expects email and uid in the request body.
