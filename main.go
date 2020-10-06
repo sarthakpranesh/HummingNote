@@ -27,6 +27,7 @@ func main() {
 	router.HandleFunc("/auth/addnote", middleware.AuthCheck(note.AddNoteHandler)).Methods("POST")
 	router.HandleFunc("/auth/notes", middleware.AuthCheck(note.GetNotesHandler)).Methods("GET")
 	router.HandleFunc("/auth/deletenote", middleware.AuthCheck(note.DeleteNoteHandler)).Methods("DELETE")
+	router.HandleFunc("/auth/editnote", middleware.AuthCheck(note.EditNoteHandler)).Methods("POST")
 
 	err := http.ListenAndServe("0.0.0.0:"+os.Getenv("PORT"), router)
 	if err != nil {
