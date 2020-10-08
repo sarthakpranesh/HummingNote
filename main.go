@@ -26,6 +26,7 @@ func main() {
 	router.HandleFunc("/auth", handlers.AuthHandler).Methods("POST")
 	router.HandleFunc("/auth/addnote", middleware.AuthCheck(note.AddNoteHandler)).Methods("POST")
 	router.HandleFunc("/auth/notes", middleware.AuthCheck(note.GetNotesHandler)).Methods("GET")
+	router.HandleFunc("/auth/note", middleware.AuthCheck(note.GetNoteHandler)).Methods("GET")
 	router.HandleFunc("/auth/deletenote", middleware.AuthCheck(note.DeleteNoteHandler)).Methods("DELETE")
 	router.HandleFunc("/auth/editnote", middleware.AuthCheck(note.EditNoteHandler)).Methods("POST")
 

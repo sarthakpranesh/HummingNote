@@ -1,4 +1,4 @@
-package models
+package responses
 
 // ErrorResponse struct is the basic response when server encpunters an error
 type ErrorResponse struct {

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sarthakpranesh/HummingNote/models"
 	"github.com/sarthakpranesh/HummingNote/models/note"
+	"github.com/sarthakpranesh/HummingNote/models/responses"
 
 	"github.com/sarthakpranesh/HummingNote/models/requests"
 )
@@ -21,16 +21,22 @@ func AddNoteHandler(response http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		log.Println("Error while decoding request body in AddNoteHandler:", err.Error())
 		response.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(response).Encode(models.ErrorResponse{Status: 4, Message: err.Error()})
+		json.NewEncoder(response).Encode(responses.ErrorResponse{Status: 4, Message: err.Error()})
 		return
 	}
 
 	n, err := note.Set(note.Note{UID: uid, Title: anr.Title, Data: anr.Data, LastModified: time.Now()})
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(response).Encode(models.ErrorResponse{Status: 5, Message: err.Error()})
+		json.NewEncoder(response).Encode(responses.ErrorResponse{Status: 5, Message: err.Error()})
 		return
 	}
 
-	json.NewEncoder(response).Encode(n)
+	json.NewEncoder(response).Encode(responses.SuccessResponse{
+		Status:  1,
+		Message: "Note created",
+		Payload: responses.AddNotePayload{
+			Note: n,
+		},
+	})
 }

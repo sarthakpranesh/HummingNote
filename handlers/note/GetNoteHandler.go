@@ -11,30 +11,30 @@ import (
 	"github.com/sarthakpranesh/HummingNote/models/note"
 )
 
-// DeleteNoteHandler is used to delete notes from database
-func DeleteNoteHandler(response http.ResponseWriter, request *http.Request) {
+// GetNoteHandler can be used to retrive a single note
+func GetNoteHandler(response http.ResponseWriter, request *http.Request) {
 	log.Println("DeleteNote Request")
 	uid := strings.ReplaceAll(request.Header.Values("Authorization")[0], "Bearer ", "")
 	id := request.URL.Query().Get("id")
 	if id == "" {
-		log.Println("Error DeleteNoteHandler, id not provided!")
+		log.Println("Error in GetNoteHandler, no id provided")
 		response.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(response).Encode(responses.ErrorResponse{Status: 3, Message: "Bad Request"})
+		json.NewEncoder(response).Encode(responses.ErrorResponse{Status: 4, Message: "Bad Request"})
 		return
 	}
 
-	b, err := note.Delete(id, uid)
+	n, err := note.Get(id, uid)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(response).Encode(responses.ErrorResponse{Status: 5, Message: err.Error()})
+		json.NewEncoder(response).Encode(responses.ErrorResponse{Status: 3, Message: err.Error()})
 		return
 	}
 
 	json.NewEncoder(response).Encode(responses.SuccessResponse{
 		Status:  1,
-		Message: "Operation completed",
-		Payload: responses.DeleteNotePayload{
-			IsDeleted: b,
+		Message: "Note retrived",
+		Payload: responses.GetNotePayload{
+			Note: n,
 		},
 	})
 }

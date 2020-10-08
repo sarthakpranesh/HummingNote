@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/sarthakpranesh/HummingNote/models"
+	"github.com/sarthakpranesh/HummingNote/models/responses"
 	"github.com/sarthakpranesh/HummingNote/models/user"
 )
 
@@ -18,7 +18,7 @@ func AuthCheck(next http.HandlerFunc) http.HandlerFunc {
 		if len(auth) == 0 {
 			log.Println("Unauthorized request")
 			res.WriteHeader(http.StatusUnauthorized)
-			json.NewEncoder(res).Encode(models.ErrorResponse{Status: 3, Message: "Unauthorized"})
+			json.NewEncoder(res).Encode(responses.ErrorResponse{Status: 3, Message: "Unauthorized"})
 			return
 		}
 		var token string
@@ -26,14 +26,14 @@ func AuthCheck(next http.HandlerFunc) http.HandlerFunc {
 		if token == "" {
 			log.Println("Unauthorized request")
 			res.WriteHeader(http.StatusUnauthorized)
-			json.NewEncoder(res).Encode(models.ErrorResponse{Status: 3, Message: "Unauthorized"})
+			json.NewEncoder(res).Encode(responses.ErrorResponse{Status: 3, Message: "Unauthorized"})
 			return
 		}
 		does, err := user.UserExists(token)
 		if err != nil || does == false {
 			log.Println("Unauthorized request")
 			res.WriteHeader(http.StatusUnauthorized)
-			json.NewEncoder(res).Encode(models.ErrorResponse{Status: 3, Message: "Unauthorized"})
+			json.NewEncoder(res).Encode(responses.ErrorResponse{Status: 3, Message: "Unauthorized"})
 			return
 		}
 		next(res, req)

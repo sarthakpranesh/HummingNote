@@ -8,8 +8,6 @@ import (
 
 	"github.com/sarthakpranesh/HummingNote/models/responses"
 
-	"github.com/sarthakpranesh/HummingNote/models"
-
 	"github.com/sarthakpranesh/HummingNote/models/note"
 )
 
@@ -22,9 +20,15 @@ func GetNotesHandler(response http.ResponseWriter, request *http.Request) {
 	notes, err := note.GetAll(uid)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(response).Encode(models.ErrorResponse{Status: 5, Message: err.Error()})
+		json.NewEncoder(response).Encode(responses.ErrorResponse{Status: 5, Message: err.Error()})
 		return
 	}
 
-	json.NewEncoder(response).Encode(responses.GetNotesResponse{Status: 1, Message: "Notes retrived", Payload: notes})
+	json.NewEncoder(response).Encode(responses.SuccessResponse{
+		Status:  1,
+		Message: "All notes retrived",
+		Payload: responses.GetNotesPayload{
+			Notes: notes,
+		},
+	})
 }

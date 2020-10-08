@@ -8,8 +8,6 @@ import (
 
 	"github.com/sarthakpranesh/HummingNote/models/responses"
 
-	"github.com/sarthakpranesh/HummingNote/models"
-
 	"github.com/sarthakpranesh/HummingNote/models/note"
 	"github.com/sarthakpranesh/HummingNote/models/requests"
 )
@@ -24,14 +22,14 @@ func EditNoteHandler(response http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		log.Println("Error in EditNoteHandler:", err.Error())
 		response.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(response).Encode(models.ErrorResponse{Status: 3, Message: err.Error()})
+		json.NewEncoder(response).Encode(responses.ErrorResponse{Status: 3, Message: err.Error()})
 		return
 	}
 
 	n, err := note.Edit(enr, uid)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(response).Encode(models.ErrorResponse{Status: 5, Message: err.Error()})
+		json.NewEncoder(response).Encode(responses.ErrorResponse{Status: 5, Message: err.Error()})
 		return
 	}
 
