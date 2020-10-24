@@ -11,12 +11,12 @@ export const storeData = async (key: any, value: any) => {
 export const getData = async (key: string) => {
   try {
     const value = await AsyncStorage.getItem('@' + key);
-    if (value !== null) {
-      return value;
+    if (value === "" || value === null) {
+      return null;
     }
-    return null;
+    return value
   } catch (e) {
     console.log(e);
-    return '';
+    return null;
   }
 };
