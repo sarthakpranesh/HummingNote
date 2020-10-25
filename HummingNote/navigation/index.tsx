@@ -1,6 +1,6 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState} from 'react';
 import { ColorSchemeName } from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -10,10 +10,6 @@ import LinkingConfiguration from './LinkingConfiguration';
 
 // importing screens
 import LoadingScreen from '../screens/LoadingScrren/LoadingScreen';
-
-import GoogleSignIn from '../components/GoogleSignIn';
-import {getData, storeData} from '../components/AsyncStorage';
-import { GoogleUser } from 'expo-google-app-auth';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -34,27 +30,9 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   const [loaded, setLoaded] = useState<boolean>(false);
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    Promise.all([getData("uid"), getData("email")])
-      .then(([uid, email]) => {
-        if (uid === null) {
-          GoogleSignIn()
-            .then((user) => {
-              // storeData(user.id, user.email);
-              // setUser({uid: user.id, user.email})
-            })
-        } else {
-          setUser({uid, email})
-        }
-      })
-  }, [])
-
-  console.log("User:", user);
 
   if (!loaded) {
-    return <LoadingScreen />
+    return <LoadingScreen hasLoaded={() => setLoaded(false)}/>
   }
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
