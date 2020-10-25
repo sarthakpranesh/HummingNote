@@ -1,15 +1,22 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import {Button, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import {Text, View} from '../components/Themed';
 
-export default function TabOneScreen() {
+// importing components
+import Divider from '../components/Divider/Divider';
+import {logout} from '../reducers/UserReducer';
+
+const TabOneScreen = (props: any) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <Divider />
       <EditScreenInfo path="/screens/TabOneScreen.js" />
+      <Button onPress={() => props.logout()} title="logout" />
     </View>
   );
 }
@@ -24,9 +31,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
 });
+
+const mapStateToProps = (state: any) => {
+  const {user} = state.userReducer;
+  return user;
+}
+
+const mapDispatchToProps = (dispatch: any) => (
+  bindActionCreators({
+    logout,
+  }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TabOneScreen);
