@@ -1,5 +1,8 @@
 {
   "expo": {
+    "experiments": {
+      "turboModules": true
+    },
     "name": "HummingNote",
     "slug": "HummingNote",
     "version": "1.0.0",
