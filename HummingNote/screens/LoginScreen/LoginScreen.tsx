@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Button, StyleSheet} from 'react-native';
+import React from 'react';
+import {Button} from 'react-native';
 import {View, Text} from '../../components/Themed';
 
 import {connect} from 'react-redux';
@@ -8,6 +8,9 @@ import {bindActionCreators} from 'redux';
 //importing components
 import GoogleSignIn from '../../components/GoogleSignIn';
 import {authenticate} from '../../reducers/UserReducer';
+
+//importing Styles
+import Styles from '../../constants/Styles';
 
 const LoginScreen = (props: any) => {
 
@@ -22,20 +25,12 @@ const LoginScreen = (props: any) => {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={Styles.container}>
             <Text>Login</Text>
             <Button title="login" onPress={onPress} />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-})
 
 const mapStateToProps = (state: any) => {
     const {user} = state.userReducer;

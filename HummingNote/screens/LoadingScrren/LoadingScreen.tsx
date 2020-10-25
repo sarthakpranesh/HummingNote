@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
 import {Text, View} from '../../components/Themed';
+
+//importing Styles
+import Styles from '../../constants/Styles';
 
 const LoadingScreen = (props: any) => { 
     useEffect(() => {
@@ -9,18 +11,10 @@ const LoadingScreen = (props: any) => {
         }, 500);
     }, [])   
     return (
-        <View style={styles.container}>
+        <View style={Styles.container}>
             <Text>HummingNote</Text>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-})
 
 export default LoadingScreen;

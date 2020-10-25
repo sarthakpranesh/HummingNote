@@ -10,9 +10,12 @@ import {Text, View} from '../components/Themed';
 import Divider from '../components/Divider/Divider';
 import {logout} from '../reducers/UserReducer';
 
+//importing Styles
+import Styles from '../constants/Styles';
+
 const TabOneScreen = (props: any) => {
   return (
-    <View style={styles.container}>
+    <View style={Styles.container}>
       <Text style={styles.title}>Tab One</Text>
       <Divider />
       <EditScreenInfo path="/screens/TabOneScreen.js" />
@@ -22,11 +25,6 @@ const TabOneScreen = (props: any) => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   title: {
     fontSize: 20,
     fontWeight: 'bold',

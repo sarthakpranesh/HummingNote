@@ -7,9 +7,12 @@ import { Text, View } from '../components/Themed';
 //importing components
 import Divider from '../components/Divider/Divider';
 
+//importing styles
+import Styles from '../constants/Styles';
+
 const TabTwoScreen = () => {
   return (
-    <View style={styles.container}>
+    <View style={Styles.container}>
       <Text style={styles.title}>Tab Two</Text>
       <Divider />
       <EditScreenInfo path="/screens/TabTwoScreen.js" />
@@ -18,11 +21,6 @@ const TabTwoScreen = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
