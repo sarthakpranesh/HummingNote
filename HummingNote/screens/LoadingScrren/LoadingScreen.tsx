@@ -18,12 +18,12 @@ const LoadingScreen = (props: LoadingScreenProps) => {
 
     const progress = useSharedValue(0);
     useEffect(() => {
-        progress.value = withTiming(1, {duration: 2000, easing: Easing.linear})
+        progress.value = withTiming(1, {duration: 4000, easing: Easing.linear})
     }, [progress]);
 
     setTimeout(() => {
         props.hasLoaded();
-    }, 2500);
+    }, 4500);
     
     return (
         <View style={Styles.container}>

@@ -6,7 +6,7 @@ import Animated, {Easing, useAnimatedProps} from 'react-native-reanimated';
 import {AnimatedStrokeProps} from '../../types'; 
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
-const colors = ["blue", "yellow", "red"];
+const colors = ["#6fe7dd", "#6639a6", "#e94560"];
 
 const AnimatedStroke = ({d, progress}: AnimatedStrokeProps) => {
     const [length, setLength] = useState(0);
@@ -35,7 +35,7 @@ const AnimatedStroke = ({d, progress}: AnimatedStrokeProps) => {
           onLayout={() => setLength(ref.current.getTotalLength())}
           ref={ref}
           d={d}
-          stroke="white"
+          stroke='#bbe1fa'
           strokeWidth={length === 0 ? 0 : 10}
           strokeDasharray={length}
         />

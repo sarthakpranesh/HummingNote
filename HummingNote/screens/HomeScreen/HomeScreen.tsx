@@ -1,32 +1,66 @@
 import React from 'react';
-import {Button, StyleSheet} from 'react-native';
+import {Button, FlatList, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-
-import EditScreenInfo from '../../components/EditScreenInfo';
 import {Text, View} from '../../components/Themed';
 
 // importing components
 import Divider from '../../components/Divider/Divider';
+import Note from '../../components/Note/Note';
 import {logout} from '../../reducers/UserReducer';
 
 //importing Styles
 import Styles from '../../constants/Styles';
 
+// temp constants
+const notes = [
+  {
+    title: "Title 1",
+    body: "This is the body of the note get that!",
+  },{
+    title: "Title 2",
+    body: "This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! ",
+  },{
+    title: "Title 3",
+    body: "This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! ",
+  },{
+    title: "Title 1",
+    body: "This is the body of the note get that!",
+  },{
+    title: "Title 2",
+    body: "This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! ",
+  },{
+    title: "Title 3",
+    body: "This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! This is the body of the note get that! ",
+  }
+]
+
 const HomeScreen = (props: any) => {
   return (
-    <View style={Styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <Divider />
-      <EditScreenInfo path="/screens/TabOneScreen.js" />
-      <Button onPress={() => props.logout()} title="logout" />
+    <View style={[Styles.mainContainer]}>
+      <FlatList
+        style={{paddingTop: 10}}
+        showsVerticalScrollIndicator={false}
+        data={notes}
+        numColumns={2}
+        keyExtractor={({}, index) => `@${index}`}
+        ItemSeparatorComponent={() => null}
+        renderItem={({item, index}) => {
+          const {title, body} = item;
+          const onPress = () => {
+            props.navigation.navigate("Note", {title, body});
+          }
+          return <Note index={index} title={title} body={body} onPress={onPress} />
+        }}
+      />
+      {/* <Button onPress={() => props.logout()} title="logout" /> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20,
+    fontSize: 40,
     fontWeight: 'bold',
   },
 });

@@ -23,7 +23,11 @@ export default function App() {
       <SafeAreaProvider>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persister}>
-            <StatusBar />
+            <StatusBar
+              animated={true}
+              hidden={false}
+              translucent={false}
+            />
             <Navigation colorScheme={colorScheme} />
           </PersistGate>
         </Provider>

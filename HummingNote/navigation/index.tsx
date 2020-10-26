@@ -12,6 +12,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import LoadingScreen from '../screens/LoadingScrren/LoadingScreen';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import NoteScreen from '../screens/NoteScreen/NoteScreen';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -47,8 +48,9 @@ const RootNavigator = connect(mapStateToProps)((props: any) => {
   }
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home" >
       <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Note" component={NoteScreen} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );
