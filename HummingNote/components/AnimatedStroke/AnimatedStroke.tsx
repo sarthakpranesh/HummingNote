@@ -2,10 +2,8 @@ import React, {useRef, useState} from 'react';
 import {Path} from 'react-native-svg';
 import Animated, {Easing, useAnimatedProps} from 'react-native-reanimated';
 
-interface AnimatedStrokeProps {
-    d: string;
-    progress: Animated.SharedValue<number>;
-}
+//importing types
+import {AnimatedStrokeProps} from '../../types'; 
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const colors = ["blue", "yellow", "red"];

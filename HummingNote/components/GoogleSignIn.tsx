@@ -11,7 +11,8 @@ export default async function GoogleSignIn() {
             if (result.type === 'success') {
               resolve(result.user);
             } else {
-              reject(new Error("User Cancelled"))
+              console.log("Google Sign in type Error:", result.type);
+              reject(new Error("User Cancelled"));
             }
         } catch (err) {
             console.log("Google Sign in Error:", err.message);
