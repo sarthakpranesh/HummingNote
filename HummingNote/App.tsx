@@ -21,9 +21,9 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <StatusBar />
         <Provider store={store}>
           <PersistGate loading={null} persistor={persister}>
+            <StatusBar />
             <Navigation colorScheme={colorScheme} />
           </PersistGate>
         </Provider>

@@ -4,16 +4,20 @@
       "turboModules": true
     },
     "name": "HummingNote",
+    "description": "Note taking app with modern UI",
     "slug": "HummingNote",
     "version": "1.0.0",
+    "platforms": ["ios", "android"],
     "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#000000",
+    "primaryColor": "#000000",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "scheme": "humming-note",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,9 +28,6 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.HummingNote"
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
     },
     "android": {
       "package": "com.HummingNote"
