@@ -14,10 +14,7 @@ import {authenticate} from '../../reducers/UserReducer';
 import Styles from '../../constants/Styles';
 import * as HmSvg from '../../constants/HummingNoteSvg';
 
-//importing types
-import {LoginScreenProps} from '../../types';
-
-const LoginScreen = (props: LoginScreenProps) => {
+const LoginScreen = (props: any) => {
     const onPress = () => {
         GoogleSignIn()
             .then((user: any) => {

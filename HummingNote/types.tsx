@@ -37,7 +37,3 @@ export interface AuthenticateParam {
   email: string;
   uid: string;
 }
-
-export interface LoginScreenProps {
-  authenticate: (u: AuthenticateParam) => void;
-}
