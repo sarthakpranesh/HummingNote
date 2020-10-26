@@ -27,6 +27,7 @@ export default function App() {
               animated={true}
               hidden={false}
               translucent={false}
+              backgroundColor="#1b262c"
             />
             <Navigation colorScheme={colorScheme} />
           </PersistGate>

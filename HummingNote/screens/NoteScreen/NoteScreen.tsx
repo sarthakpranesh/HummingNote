@@ -7,15 +7,18 @@ import Header from '../../components/Header/Header';
 
 //importing styles
 import Styles from '../../constants/Styles';
+import { SharedElement } from 'react-navigation-shared-element';
 
 const NoteScreen = (props: any) => {
-    const {title , body} = props.route.params;
+    const {title , body, index} = props.route.params;
 
     return (
         <View style={Styles.mainContainer}>
             <Header goBack={() => props.navigation.goBack()} />
             <View style={styles.noteContainer}>
-                <Text style={styles.noteTitle}>{title}</Text>
+                <SharedElement id={`item.${index}.title`}>
+                    <Text style={styles.noteTitle}>{title}</Text>
+                </SharedElement>
                 <Text style={styles.noteBody}>{body}</Text>
             </View>
         </View>
@@ -27,12 +30,15 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     noteTitle: {
-        padding: 20,
+        margin: 20,
         paddingBottom: 0,
         fontSize: 24,
+        fontWeight: 'bold',
+        position: 'absolute',
     },
     noteBody: {
-        padding: 20,
+        marginTop: 60,
+        margin: 20,
         fontSize: 18,
         textAlign: 'justify',
     }

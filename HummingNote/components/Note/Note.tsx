@@ -4,6 +4,7 @@ import {View, Text} from '../Themed';
 
 //importing constants
 import Layout from '../../constants/Layout';
+import { SharedElement } from 'react-navigation-shared-element';
 
 interface NoteProps {
     index: number;
@@ -20,7 +21,9 @@ const Note = ({index, title, body, onPress}: NoteProps) => {
         <View style={[styles.noteContainer, padStyle]}>
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.noteBox}>
-                    <Text style={styles.title}>{title}</Text>
+                    <SharedElement id={`item.${index}.title`}>
+                        <Text style={styles.title}>{title}</Text>
+                    </SharedElement>
                     <Text style={styles.body}>{body}</Text>
                 </View>
             </TouchableOpacity>
@@ -45,12 +48,14 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: 'bold',
+        position: 'absolute',
     },
     body: {
+        marginTop: 24,
         fontSize: 12,
         fontWeight: '600',
         textAlign: 'justify',
     }
-})
+});
 
 export default Note;

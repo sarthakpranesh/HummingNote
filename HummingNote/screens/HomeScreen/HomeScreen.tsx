@@ -48,7 +48,7 @@ const HomeScreen = (props: any) => {
         renderItem={({item, index}) => {
           const {title, body} = item;
           const onPress = () => {
-            props.navigation.navigate("Note", {title, body});
+            props.navigation.navigate("Note", {title, body, index});
           }
           return <Note index={index} title={title} body={body} onPress={onPress} />
         }}
