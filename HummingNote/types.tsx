@@ -1,13 +1,8 @@
 import Animated from 'react-native-reanimated';
 
 export type RootStackParamList = {
-  Root: undefined;
+  Home: undefined;
   NotFound: undefined;
-};
-
-export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
 };
 
 export type TabOneParamList = {
@@ -24,16 +19,16 @@ export type User = {
   uid: string; 
 }
 
-export interface LoadingScreenProps {
+export type LoadingScreenProps = {
   hasLoaded: () => void;
 }
 
-export interface AnimatedStrokeProps {
+export type AnimatedStrokeProps = {
   d: string;
   progress: Animated.SharedValue<number>;
 }
 
-export interface AuthenticateParam {
+export type AuthenticateParam = {
   email: string;
   uid: string;
 }

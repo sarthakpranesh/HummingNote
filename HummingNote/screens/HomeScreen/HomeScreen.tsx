@@ -3,17 +3,17 @@ import {Button, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import {Text, View} from '../components/Themed';
+import EditScreenInfo from '../../components/EditScreenInfo';
+import {Text, View} from '../../components/Themed';
 
 // importing components
-import Divider from '../components/Divider/Divider';
-import {logout} from '../reducers/UserReducer';
+import Divider from '../../components/Divider/Divider';
+import {logout} from '../../reducers/UserReducer';
 
 //importing Styles
-import Styles from '../constants/Styles';
+import Styles from '../../constants/Styles';
 
-const TabOneScreen = (props: any) => {
+const HomeScreen = (props: any) => {
   return (
     <View style={Styles.container}>
       <Text style={styles.title}>Tab One</Text>
@@ -42,4 +42,4 @@ const mapDispatchToProps = (dispatch: any) => (
   }, dispatch)
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(TabOneScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
