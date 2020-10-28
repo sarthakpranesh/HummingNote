@@ -14,7 +14,21 @@ const NoteScreen = (props: any) => {
 
     return (
         <View style={Styles.mainContainer}>
-            <Header goBack={() => props.navigation.goBack()} />
+            <Header
+                left={[{name: "arrow-left", onPress: () => props.navigation.goBack()}]}
+                right={[
+                    {
+                        name: "flag",
+                        onPress: () => console.log("0")
+                    },{
+                        name: "bell",
+                        onPress: () => console.log("1")
+                    },{
+                        name: "archive",
+                        onPress: () => console.log("2")
+                    }
+                ]}
+            />
             <View style={styles.noteContainer}>
                 <SharedElement id={`item.${index}.title`}>
                     <Text style={styles.noteTitle}>{title}</Text>

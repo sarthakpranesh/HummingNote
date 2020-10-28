@@ -10,14 +10,14 @@
     "platforms": ["ios", "android"],
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "backgroundColor": "#000000",
-    "primaryColor": "#000000",
+    "backgroundColor": "#1b262c",
+    "primaryColor": "#1b262c",
     "icon": "./assets/images/icon.png",
     "scheme": "humming-note",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#1b262c"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

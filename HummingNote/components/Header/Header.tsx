@@ -1,22 +1,47 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import {View, Feather} from '../Themed';
+import {View, Feather, Text} from '../Themed';
 
 //importing constants
 import Layout from "../../constants/Layout";
 
-const Header = (props: any) => {
+interface IconObject {
+    onPress: () => void;
+    name: string;
+    isLabel?: boolean;
+}
+
+interface HeaderProps {
+    left: IconObject [];
+    right: IconObject [];
+}
+
+const Header = ({left, right}: HeaderProps) => {
 
     return (
         <View style={styles.headerContainer}>
-            <TouchableOpacity onPress={props.goBack}>
-                <Feather name="arrow-left" size={24} />
-            </TouchableOpacity>
+            {
+                left.map(({onPress, name, isLabel}, index) => {
+                    if (isLabel) {
+                        return <TouchableOpacity key={`${index}`} onPress={onPress}>
+                            <Text style={styles.headerLabel}>{name}</Text>
+                        </TouchableOpacity>
+                    }
+
+                    return <TouchableOpacity key={`${index}`} onPress={onPress}>
+                        <Feather name={name} size={24} />
+                    </TouchableOpacity>
+                })
+            }
             <View style={styles.headerRightIcons}>
-                <Feather name="flag" size={24} style={{marginRight: 20}} />
-                <Feather name="bell" size={24} style={{marginRight: 20}} />
-                <Feather name="archive" size={24} />
+                {
+                    right.map(({onPress, name}, index) => {
+                        return <TouchableOpacity key={`${index}`} onPress={onPress}>
+                            <Feather name={name} size={24} style={{marginRight: 20}} />
+                        </TouchableOpacity>
+                    })
+                }
             </View>
         </View>
     );
@@ -37,7 +62,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
-    }
+    },
+    headerLabel: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
 });
 
 export default Header;

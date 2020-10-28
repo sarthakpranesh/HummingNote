@@ -69,9 +69,11 @@ const RootNavigator = connect(mapStateToProps)((props: any) => {
           transitionSpec: {
             open: {
               animation: "spring",
+              duration: 200,
             },
             close: {
               animation: "spring",
+              duration: 200,
             },
           },
           cardStyleInterpolator: ({current: {progress}}) => {

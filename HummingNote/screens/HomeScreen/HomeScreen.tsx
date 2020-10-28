@@ -1,12 +1,13 @@
 import React from 'react';
-import {Button, FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Text, View} from '../../components/Themed';
+import {View} from '../../components/Themed';
 
 // importing components
-import Divider from '../../components/Divider/Divider';
 import Note from '../../components/Note/Note';
+import Header from '../../components/Header/Header';
+import Divider from '../../components/Divider/Divider'
 import {logout} from '../../reducers/UserReducer';
 
 //importing Styles
@@ -38,6 +39,11 @@ const notes = [
 const HomeScreen = (props: any) => {
   return (
     <View style={[Styles.mainContainer]}>
+      <Header
+        left={[{name: "Humming Note", isLabel: true, onPress: () => console.log("label")}]}
+        right={[{name: "plus", onPress: () => console.log("Add mote")}]}
+      />
+      <Divider />
       <FlatList
         style={{paddingTop: 10}}
         showsVerticalScrollIndicator={false}
