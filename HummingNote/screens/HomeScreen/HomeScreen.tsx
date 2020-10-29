@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {View} from '../../components/Themed';
@@ -59,7 +59,7 @@ const HomeScreen = (props: any) => {
           return <Note index={index} title={title} body={body} onPress={onPress} />
         }}
       />
-      {/* <Button onPress={() => props.logout()} title="logout" /> */}
+      <Button onPress={() => props.logout()} title="logout" />
     </View>
   );
 }

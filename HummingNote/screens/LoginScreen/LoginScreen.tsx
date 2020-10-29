@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import {Button, StyleSheet} from 'react-native';
 import {View} from '../../components/Themed';
 import Svg, {Path} from 'react-native-svg';
@@ -11,12 +11,21 @@ import GoogleSignIn from '../../components/GoogleSignIn';
 import {authenticate} from '../../reducers/UserReducer';
 
 //importing constants
+import BackendAPI from '../../constants/APIs';
 import Styles from '../../constants/Styles';
 import * as HmSvg from '../../constants/HummingNoteSvg';
 
 const LoginScreen = (props: any) => {
     const onPress = () => {
         GoogleSignIn()
+            .then((user: any) => {
+                return BackendAPI({route: "auth", method: "POST", body: {email: user.email, uid: user.id}})
+            })
+            .then((respJson) => respJson.json())
+            .then((resp) => {
+                console.log(resp);
+                return resp.body.user;
+            })
             .then((user: any) => {
                 props.authenticate({email: user.email, uid: user.id})
             })
