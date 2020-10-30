@@ -5,8 +5,10 @@ interface BackendAPIParams {
     body?: Object | null;
 }
 
+const API = "https://humming-server.herokuapp.com/";
+
 const BackendAPI = ({route, auth, method, body}: BackendAPIParams) => {
-    return fetch("192.168.1.7:8080" + route, {
+    return fetch(API + route, {
         method: method,
         headers: {
             Authorization: "Bearer " + auth,
