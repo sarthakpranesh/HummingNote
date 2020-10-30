@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import {Button, StyleSheet} from 'react-native';
+import {Alert, Button, StyleSheet} from 'react-native';
 import {View} from '../../components/Themed';
 import Svg, {Path} from 'react-native-svg';
 
@@ -22,12 +22,17 @@ const LoginScreen = (props: any) => {
                 return BackendAPI({route: "auth", method: "POST", body: {email: user.email, uid: user.id}})
             })
             .then((respJson) => respJson.json())
-            .then((resp) => {
-                console.log(resp);
-                return resp.body.user;
-            })
-            .then((user: any) => {
-                props.authenticate({email: user.email, uid: user.id})
+            .then((resp: any) => {
+                if (resp.status === 1) {
+                    props.authenticate({email: resp.Payload.user.email, uid: resp.Payload.user.uid})
+                } else {
+                    Alert.alert(
+                        "Authentication",
+                        resp.message,
+                        [{text: "Exit", onPress: () => console.log('exit')}],
+                        {cancelable: false,}
+                    )
+                }
             })
             .catch((err) => {
                 console.log("Login Screen Error:", err.message);

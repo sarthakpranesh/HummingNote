@@ -12,6 +12,8 @@ const BackendAPI = ({route, auth, method, body}: BackendAPIParams) => {
         method: method,
         headers: {
             Authorization: "Bearer " + auth,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: body !== null ? JSON.stringify(body) : null,
     })
