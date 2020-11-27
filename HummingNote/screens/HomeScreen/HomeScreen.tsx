@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, Button} from 'react-native';
+import {ScrollView, StyleSheet, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {View} from '../../components/Themed';
@@ -12,6 +12,10 @@ import {logout} from '../../reducers/UserReducer';
 
 //importing Styles
 import Styles from '../../constants/Styles';
+
+//importing Constants
+import layout from '../../constants/Layout';
+const {width} = layout.window;
 
 // temp constants
 const notes = [
@@ -44,21 +48,35 @@ const HomeScreen = (props: any) => {
         right={[{name: "plus", onPress: () => console.log("Add mote")}]}
       />
       <Divider />
-      <FlatList
-        style={{paddingTop: 10}}
-        showsVerticalScrollIndicator={false}
-        data={notes}
-        numColumns={2}
-        keyExtractor={({}, index) => `@${index}`}
-        ItemSeparatorComponent={() => null}
-        renderItem={({item, index}) => {
-          const {title, body} = item;
-          const onPress = () => {
-            props.navigation.navigate("Note", {title, body, index});
-          }
-          return <Note index={index} title={title} body={body} onPress={onPress} />
-        }}
-      />
+      <ScrollView
+        alwaysBounceVertical={true}
+        contentContainerStyle={styles.notesContainer}
+      >
+        <View style={styles.noteContainerSide}>
+          <View style={styles.noteSideWrapper}>
+            {
+              notes.filter((_, i) => i%2 !== 0).map((item, index) => {
+                const {title, body} = item;
+                const onPress = () => {
+                  props.navigation.navigate("Note", {title, body, index});
+                }
+                return <Note key={`${index}`} index={index} title={title} body={body} onPress={onPress} />
+              })
+            }
+          </View>
+          <View style={styles.noteSideWrapper}>
+            {
+              notes.filter((_, i) => i%2 === 0).map((item, index) => {
+                const {title, body} = item;
+                const onPress = () => {
+                  props.navigation.navigate("Note", {title, body, index});
+                }
+                return <Note key={`${index}`} index={index} title={title} body={body} onPress={onPress} />
+              })
+            }
+          </View>
+        </View>
+      </ScrollView>
       <Button onPress={() => props.logout()} title="logout" />
     </View>
   );
@@ -69,6 +87,19 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
   },
+  notesContainer: {
+    paddingTop: 10,
+  },
+  noteContainerSide: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  noteSideWrapper: {
+    width: (width / 2) - 6,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  }
 });
 
 const mapStateToProps = (state: any) => {

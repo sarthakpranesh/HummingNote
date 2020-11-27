@@ -14,11 +14,9 @@ interface NoteProps {
 }
 
 const Note = ({index, title, body, onPress}: NoteProps) => {
-    
-    const padStyle = index % 2 === 0 ? {paddingRight: 3}: {paddingLeft: 3};
 
     return (
-        <View style={[styles.noteContainer, padStyle]}>
+        <View style={styles.noteContainer}>
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.noteBox}>
                     <SharedElement id={`item.${index}.title`}>
@@ -35,7 +33,6 @@ const styles = StyleSheet.create({
     noteContainer: {
         width: (Layout.window.width / 2) - 6,
         maxHeight: Layout.window.height*0.3,
-        paddingBottom: 10,
     },
     noteBox: {
         borderColor: 'rgba(255, 255, 255, 0.6)',
@@ -43,6 +40,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 8,
         padding: 14,
+        margin: 7,
         overflow: 'hidden',
     },
     title: {
