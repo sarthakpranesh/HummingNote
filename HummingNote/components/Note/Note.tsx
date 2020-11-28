@@ -7,19 +7,19 @@ import Layout from '../../constants/Layout';
 import { SharedElement } from 'react-navigation-shared-element';
 
 interface NoteProps {
-    index: number;
+    id: string;
     title: string;
     body: string;
     onPress: () => void;
 }
 
-const Note = ({index, title, body, onPress}: NoteProps) => {
+const Note = ({id, title, body, onPress}: NoteProps) => {
 
     return (
         <View style={styles.noteContainer}>
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.noteBox}>
-                    <SharedElement id={`item.${index}.title`}>
+                    <SharedElement id={`item.${id}.title`}>
                         <Text style={styles.title}>{title}</Text>
                     </SharedElement>
                     <Text style={styles.body}>{body}</Text>

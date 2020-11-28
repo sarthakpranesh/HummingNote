@@ -58,7 +58,7 @@ const RootNavigator = connect(mapStateToProps)((props: any) => {
         component={NoteScreen}
         sharedElementsConfig={(route) => [
           {
-            id: `item.${route.params.index}.title`,
+            id: `item.${route.params.id}.title`,
             animation: 'move',
             align: 'auto',
             resize: 'auto',

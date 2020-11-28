@@ -10,7 +10,7 @@ import Styles from '../../constants/Styles';
 import { SharedElement } from 'react-navigation-shared-element';
 
 const NoteScreen = (props: any) => {
-    const {title , body, index} = props.route.params;
+    const {title , body, id} = props.route.params;
 
     return (
         <View style={Styles.mainContainer}>
@@ -30,7 +30,7 @@ const NoteScreen = (props: any) => {
                 ]}
             />
             <View style={styles.noteContainer}>
-                <SharedElement id={`item.${index}.title`}>
+                <SharedElement id={`item.${id}.title`}>
                     <Text style={styles.noteTitle}>{title}</Text>
                 </SharedElement>
                 <Text style={styles.noteBody}>{body}</Text>
