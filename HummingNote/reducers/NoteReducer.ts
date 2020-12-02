@@ -18,8 +18,8 @@ export default combineReducers({
 });
 
 export const update = (notes: any) => (
-    {
-      type: 'UPDATE',
-      payload: notes,
-    }
+  {
+    type: 'UPDATE',
+    payload: notes,
+  }
 );

@@ -1,9 +1,10 @@
 import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
 import {enableScreens} from 'react-native-screens';
-import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
-import React, {useState} from 'react';
-import {ColorSchemeName} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import React, {useEffect, useState} from 'react';
+import {ColorSchemeName, Alert} from 'react-native';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import {RootStackParamList} from '../types';
@@ -14,6 +15,10 @@ import LoadingScreen from '../screens/LoadingScrren/LoadingScreen';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import NoteScreen from '../screens/NoteScreen/NoteScreen';
+
+// importing Components
+import fetchNotes from '../components/Server/fetchNotes';
+import {update} from '../reducers/NoteReducer';
 
 enableScreens();
 
@@ -32,15 +37,43 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
-const Stack = createSharedElementStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const mapStateToProps = (state: any) => {
   const {user} = state.userReducer;
   return user;
 }
 
-const RootNavigator = connect(mapStateToProps)((props: any) => {
+const mapDispatchToProps = (dispatch: any) => (
+  bindActionCreators({
+    update,
+  }, dispatch)
+);
+
+const RootNavigator = connect(mapStateToProps, mapDispatchToProps)((props: any) => {
   const [loaded, setLoaded] = useState<boolean>(false);
+
+  const SyncReduxAndServer = () => {
+    fetchNotes(props.uid)
+      .then((data) => {
+        if (data.status === 1) {
+          props.update(data.notes)
+        } else {
+          console.log("Root Navigator - SyncReduxAndServer: Request Status not 1:", data);
+        }
+      })
+      .catch((err) => {
+        Alert.alert("Error", err.message)
+      })
+  }
+
+  useEffect(() => {
+    if (!props.authenticated) {
+      return;
+    }
+    SyncReduxAndServer()
+    setInterval(SyncReduxAndServer, 300000)
+  }, [])
 
   if (!loaded) {
     return <LoadingScreen hasLoaded={() => setLoaded(true)}/>
@@ -55,35 +88,7 @@ const RootNavigator = connect(mapStateToProps)((props: any) => {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen
         name="Note"
-        component={NoteScreen}
-        sharedElementsConfig={(route) => [
-          {
-            id: `item.${route.params.id}.title`,
-            animation: 'move',
-            align: 'auto',
-            resize: 'auto',
-          },
-        ]}
-        options={() => ({
-          gestureEnabled: false,
-          transitionSpec: {
-            open: {
-              animation: "spring",
-              duration: 200,
-            },
-            close: {
-              animation: "spring",
-              duration: 200,
-            },
-          },
-          cardStyleInterpolator: ({current: {progress}}) => {
-            return {
-              cardStyle: {
-                opacity: progress,
-              },
-            }
-          },
-        })}
+        component={(props) => <NoteScreen SyncReduxAndServer={SyncReduxAndServer}  {...props}/>}
       />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>

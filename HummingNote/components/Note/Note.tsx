@@ -19,9 +19,7 @@ const Note = ({id, title, body, onPress}: NoteProps) => {
         <View style={styles.noteContainer}>
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.noteBox}>
-                    <SharedElement id={`item.${id}.title`}>
-                        <Text style={styles.title}>{title}</Text>
-                    </SharedElement>
+                    <Text style={styles.title}>{title}</Text>
                     <Text style={styles.body}>{body}</Text>
                 </View>
             </TouchableOpacity>
@@ -46,10 +44,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: 'bold',
-        position: 'absolute',
+        textAlign: 'left',
     },
     body: {
-        marginTop: 24,
+        marginTop: 12,
         fontSize: 12,
         fontWeight: '600',
         textAlign: 'justify',

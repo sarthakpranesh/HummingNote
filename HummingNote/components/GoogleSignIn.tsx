@@ -1,4 +1,5 @@
 import * as Google from 'expo-google-app-auth';
+import {Alert} from 'react-native';
 
 export default async function GoogleSignIn() {
     return new Promise(async (resolve, reject) => {
@@ -16,6 +17,7 @@ export default async function GoogleSignIn() {
             }
         } catch (err) {
             console.log("Google Sign in Error:", err.message);
+            Alert.alert("Google Sign in Error", err.message);
             reject(err);
         }
     })

@@ -4,7 +4,6 @@ import Svg from  'react-native-svg';
 import {Easing, useSharedValue, withTiming} from 'react-native-reanimated';
 
 //importing constants
-import Layout from '../../constants/Layout';
 import AnimatedStroke from '../../components/AnimatedStroke/AnimatedStroke';
 
 //importing Styles

@@ -8,7 +8,7 @@ export interface fetchNotesReturn {
 
 const fetchNotes = (uid: string): Promise<fetchNotesReturn> => {
     return new Promise((resolve, reject) => {
-        BackendAPI({route: "/auth/notes", auth: uid, method: "GET"})
+        BackendAPI({route: "auth/notes", auth: uid, method: "GET"})
             .then((resp) => resp.json())
             .then((data) => {
                 let notes;
