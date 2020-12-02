@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Alert, StyleSheet} from 'react-native';
+import {Alert, StyleSheet, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {View, Text, TextInput} from '../../components/Themed';
@@ -101,7 +101,11 @@ const NoteScreen = (props: any) => {
                         {
                             name: "Cross",
                             cusColor: color,
-                            onPress: () => setIsEditing(false)
+                            onPress: () => Promise.all([
+                                setNewTitle(title),
+                                setNewData(data),
+                                setIsEditing(false),
+                            ])
                         }
                     ]}
                     right={[
@@ -112,19 +116,29 @@ const NoteScreen = (props: any) => {
                         }
                     ]}
                 />
-                <View style={styles.noteContainer}>
-                    <TextInput
-                        style={styles.noteTitle}
-                        value={newTitle}
-                        onChangeText={(t) => setNewTitle(t)}
-                    />
-                    <TextInput
-                        style={styles.noteBody}
-                        value={newData}
-                        onChangeText={(b) => setNewData(b)}
-                        multiline={true}
-                    />
-                </View>
+                <ScrollView
+                    alwaysBounceVertical={true}
+                    showsVerticalScrollIndicator={false}
+                    style={{marginTop: 12}}
+                >
+                    <View style={styles.noteContainer}>
+                        <TextInput
+                            style={[styles.noteTitle, {color}]}
+                            value={newTitle}
+                            onChangeText={(t) => setNewTitle(t)}
+                        />
+                        <TextInput
+                            style={[styles.noteBody, {
+                                color,
+                                marginBottom: 0,
+                                paddingBottom: 20,
+                            }]}
+                            value={newData}
+                            onChangeText={(b) => setNewData(b)}
+                            multiline={true}
+                        />
+                    </View>
+                </ScrollView>
             </View>
         )
     }
@@ -157,10 +171,16 @@ const NoteScreen = (props: any) => {
                     }
                 ]}
             />
-            <View style={styles.noteContainer}>
-                <Text style={[styles.noteTitle, {color}]}>{title}</Text>
-                <Text style={[styles.noteBody, {color}]}>{data}</Text>
-            </View>
+            <ScrollView
+                alwaysBounceVertical={true}
+                showsVerticalScrollIndicator={false}
+                style={{marginTop: 12}}
+            >
+                <View style={styles.noteContainer}>
+                    <Text style={[styles.noteTitle, {color}]}>{title}</Text>
+                    <Text style={[styles.noteBody, {color}]}>{data}</Text>
+                </View>
+            </ScrollView>
         </View>
     );
 }

@@ -5,19 +5,22 @@ import {View, Text} from '../Themed';
 //importing constants
 import Layout from '../../constants/Layout';
 import { SharedElement } from 'react-navigation-shared-element';
+import { color } from 'react-native-reanimated';
 
 interface NoteProps {
+    color: string;
     title: string;
     body: string;
     onPress: () => void;
 }
 
-const Note = ({title, body, onPress}: NoteProps) => {
+const Note = ({color, title, body, onPress}: NoteProps) => {
 
     return (
         <View style={styles.noteContainer}>
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.noteBox}>
+                    <View style={[styles.colorMarker,{backgroundColor: color}]}/>
                     <Text style={styles.title}>{title}</Text>
                     <Text style={styles.body}>{body}</Text>
                 </View>
@@ -39,6 +42,14 @@ const styles = StyleSheet.create({
         padding: 14,
         margin: 7,
         overflow: 'hidden',
+    },
+    colorMarker: {
+        height: 8,
+        width: 8,
+        right: 6,
+        top: 6,
+        borderRadius: 4,
+        position: 'absolute',
     },
     title: {
         fontSize: 18,

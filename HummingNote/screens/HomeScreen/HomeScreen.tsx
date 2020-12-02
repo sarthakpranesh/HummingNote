@@ -2,7 +2,7 @@ import React from 'react';
 import {ScrollView, StyleSheet, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {View} from '../../components/Themed';
+import {View, Text} from '../../components/Themed';
 
 // importing components
 import Note from '../../components/Note/Note';
@@ -21,6 +21,8 @@ const HomeScreen = (props: any) => {
 
   const notes = props.note.notes;
 
+  const pinnedNotes = notes.filter((note: any) => note.ispinned)
+
   return (
     <View style={[Styles.mainContainer, {paddingBottom: 0, paddingHorizontal: 0}]}>
       <Header
@@ -33,26 +35,52 @@ const HomeScreen = (props: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.notesContainer}
       >
+        <Text style={styles.noteContainerHeader}>Pinned</Text>
+        <View style={styles.noteContainerSide}>
+          <View style={styles.noteSideWrapper}>
+            {
+              pinnedNotes.filter((_: any, i: number) => i%2 === 0).map((item: any, index: number) => {
+                const {title, data, _id, color} = item;
+                const onPress = () => {
+                  props.navigation.navigate("Note", {index: notes.indexOf(item), _id: _id});
+                }
+                return <Note key={_id} title={title} color={color} body={data} onPress={onPress} />
+              })
+            }
+          </View>
+          <View style={styles.noteSideWrapper}>
+            {
+              pinnedNotes.filter((_: any, i: number) => i%2 !== 0).map((item: any, index: number) => {
+                const {title, data, _id, color} = item;
+                const onPress = () => {
+                  props.navigation.navigate("Note", {index: notes.indexOf(item), _id: _id});
+                }
+                return <Note key={_id} color={color} title={title} body={data} onPress={onPress} />
+              })
+            }
+          </View>
+        </View>
+        <Text style={styles.noteContainerHeader}>All</Text>
         <View style={styles.noteContainerSide}>
           <View style={styles.noteSideWrapper}>
             {
               notes.filter((_: any, i: number) => i%2 === 0).map((item: any, index: number) => {
-                const {title, data, _id} = item;
+                const {title, data, _id, color} = item;
                 const onPress = () => {
                   props.navigation.navigate("Note", {index: notes.indexOf(item), _id: _id});
                 }
-                return <Note key={_id} title={title} body={data} onPress={onPress} />
+                return <Note key={_id} color={color} title={title} body={data} onPress={onPress} />
               })
             }
           </View>
           <View style={styles.noteSideWrapper}>
             {
               notes.filter((_: any, i: number) => i%2 !== 0).map((item: any, index: number) => {
-                const {title, data, _id} = item;
+                const {title, data, _id, color} = item;
                 const onPress = () => {
                   props.navigation.navigate("Note", {index: notes.indexOf(item), _id: _id});
                 }
-                return <Note key={_id} title={title} body={data} onPress={onPress} />
+                return <Note key={_id} color={color} title={title} body={data} onPress={onPress} />
               })
             }
           </View>
@@ -69,7 +97,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   notesContainer: {
-    paddingVertical: 10,
+    paddingBottom: 10,
+  },
+  noteContainerHeader: {
+    marginLeft: 12,
+    marginTop: 20,
   },
   noteContainerSide: {
     display: "flex",
