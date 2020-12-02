@@ -6,39 +6,90 @@ import {View, Text, TextInput} from '../../components/Themed';
 
 //importing components
 import Header from '../../components/Header/Header';
-import {updateNoteText} from '../../components/Server/updateNote';
+import {updateNoteText, toggleNotePin, setNoteColor} from '../../components/Server/updateNote';
 import {update} from '../../reducers/NoteReducer';
 
 //importing styles
 import Styles from '../../constants/Styles';
 
+//importing Constants
+import Colors from '../../constants/Colors';
+
 const NoteScreen = (props: any) => {
     const {index, _id} = props.route.params;
-    const [title, setTitle] = useState<string>(props.note.notes[index].title);
-    const [data, setData] = useState<string>(props.note.notes[index].data);
+    const note = props.note.notes[index];
+
+    const [title, setTitle] = useState<string>(note.title);
+    const [data, setData] = useState<string>(note.data);
+    const [pinned, setPinned] = useState<boolean>(note.ispinned);
+    const [color, setColor] = useState<string>(
+        note.color ? 
+        note.color : 
+        Colors.dark.app[0]
+    )
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [newTitle, setNewTitle] = useState<string>(title);
     const [newData, setNewData] = useState<string>(data);
 
     const onPressSave = async () => {
+        Promise.all([
+            setTitle(newTitle),
+            setData(newData),
+            setIsEditing(false),
+        ])
         try {
             const updated = await updateNoteText(props.user.uid, {
                 _id: _id,
-                data: newData.length === data.length ? null : newData,
-                title: newTitle.length === title.length ? null : newTitle
+                data: newData,
+                title: newTitle
             })
             if (updated.status !== 1) {
                 Alert.alert("Server Error:", updated.message);
             }
-            Promise.all([
-                setTitle(newTitle),
-                setData(newData),
-                props.SyncReduxAndServer(), // Syncs Redux with Server
-                setIsEditing(false),
-            ])
+            props.SyncReduxAndServer(); // Syncs Redux with Server
         } catch (err) {
             console.log("Error on onPressSave:", err.message);
+            Alert.alert("Application Error:", err.message);
+        }
+    }
+
+    const onPressPin = async () => {
+        const wasPinned = pinned;
+        setPinned(!pinned);
+        try {
+            const updated = await toggleNotePin(props.user.uid, {
+                _id: _id,
+                ispinned: !wasPinned,
+            })
+            if (updated.status !== 1) {
+                Alert.alert("Server Error:", updated.message);
+            }
+            props.SyncReduxAndServer()
+        } catch (err) {
+            setPinned(!pinned);
+            console.log("Error on onPressSave:", err.message);
+            Alert.alert("Application Error:", err.message);
+        }
+    }
+
+    const onPressColorSet = async () => {
+        const curColorIndex = Colors.dark.app.indexOf(color);
+        const nextColorIndex = (curColorIndex + 1) % Colors.dark.app.length;
+        const newColor = Colors.dark.app[nextColorIndex];
+        setColor(newColor);
+        try {
+            const updated = await setNoteColor(props.user.uid, {
+                _id: _id,
+                color: newColor
+            })
+            if (updated.status !== 1) {
+                Alert.alert("Server Error:", updated.message);
+            }
+            props.SyncReduxAndServer()
+        } catch (err) {
+            console.log("Error on onPressSave:", err.message);
+            Alert.alert("Application Error:", err.message);
         }
     }
 
@@ -46,10 +97,17 @@ const NoteScreen = (props: any) => {
         return (
             <View style={Styles.mainContainer}>
                 <Header
-                    left={[{name: "x", onPress: () => setIsEditing(false)}]}
+                    left={[
+                        {
+                            name: "Cross",
+                            cusColor: color,
+                            onPress: () => setIsEditing(false)
+                        }
+                    ]}
                     right={[
                         {
-                            name: "save",
+                            name: "Save",
+                            cusColor: color,
                             onPress: onPressSave,
                         }
                     ]}
@@ -74,23 +132,34 @@ const NoteScreen = (props: any) => {
     return (
         <View style={Styles.mainContainer}>
             <Header
-                left={[{name: "arrow-left", onPress: () => props.navigation.goBack()}]}
+                left={[
+                    {
+                        name: "Back",
+                        cusColor: color,
+                        onPress: () => props.navigation.goBack()
+                    }
+                ]}
                 right={[
                     {
-                        name: "flag",
-                        onPress: () => console.log("0")
+                        name: "Star",
+                        isFilled: pinned,
+                        cusColor: color,
+                        onPress: () => onPressPin()
                     },{
-                        name: "bell",
-                        onPress: () => console.log("1")
+                        name: "Drop",
+                        isFilled: true,
+                        cusColor: color,
+                        onPress: () => onPressColorSet()
                     },{
-                        name: "edit",
+                        name: "Edit",
+                        cusColor: color,
                         onPress: () => setIsEditing(true)
                     }
                 ]}
             />
             <View style={styles.noteContainer}>
-                <Text style={styles.noteTitle}>{title}</Text>
-                <Text style={styles.noteBody}>{data}</Text>
+                <Text style={[styles.noteTitle, {color}]}>{title}</Text>
+                <Text style={[styles.noteBody, {color}]}>{data}</Text>
             </View>
         </View>
     );
@@ -102,13 +171,14 @@ const styles = StyleSheet.create({
     },
     noteTitle: {
         margin: 20,
+
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'left',
     },
     noteBody: {
         margin: 20,
-        marginTop: 8,
+        marginTop: 12,
         fontSize: 18,
         textAlign: 'justify',
     }

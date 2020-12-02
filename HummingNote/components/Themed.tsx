@@ -4,11 +4,10 @@ import {
   View as DefaultView,
   TextInput as DefaultTextInput,
 } from 'react-native';
-import { Feather as DefaultFeather } from '@expo/vector-icons';
+import DefaultSvg, {CustomSvgType as DefaultSvgProps} from './Svg/index';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { useTheme } from '@react-navigation/native';
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -29,16 +28,10 @@ type ThemeProps = {
   darkColor?: string;
 };
 
-type DefaultFeatherType = {
-  name: string;
-  size: number;
-  style?: any;
-}
-
 export type TextProps = ThemeProps & DefaultText['props'];
 export type TextInputProps = ThemeProps & DefaultTextInput['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
-export type FeatherProps = ThemeProps & DefaultFeatherType;
+export type SvgProps = ThemeProps & DefaultSvgProps;
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -61,9 +54,9 @@ export function View(props: ViewProps) {
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
-export function Feather(props: FeatherProps) {
+export function Svg(props: SvgProps) {
   const {style, lightColor, darkColor, ...otherProps} = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
-  return <DefaultFeather style={style} color={color} {...otherProps} />;
-};
+  return <DefaultSvg style={style} color={color} {...otherProps}/>;
+}

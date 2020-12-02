@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import {View, Feather, Text} from '../Themed';
+import {View, Svg, Text} from '../Themed';
 
 //importing constants
 import Layout from "../../constants/Layout";
@@ -9,6 +9,8 @@ import Layout from "../../constants/Layout";
 interface IconObject {
     onPress: () => void;
     name: string;
+    isFilled?: boolean;
+    cusColor?: string;
     isLabel?: boolean;
 }
 
@@ -22,7 +24,7 @@ const Header = ({left, right}: HeaderProps) => {
     return (
         <View style={styles.headerContainer}>
             {
-                left.map(({onPress, name, isLabel}, index) => {
+                left.map(({onPress, name, isLabel, isFilled, cusColor}, index) => {
                     if (isLabel) {
                         return <TouchableOpacity key={`${index}`} onPress={onPress}>
                             <Text style={styles.headerLabel}>{name}</Text>
@@ -30,15 +32,15 @@ const Header = ({left, right}: HeaderProps) => {
                     }
 
                     return <TouchableOpacity key={`${index}`} onPress={onPress}>
-                        <Feather name={name} size={24} />
+                        <Svg name={name} isFilled={isFilled} cusColor={cusColor} />
                     </TouchableOpacity>
                 })
             }
             <View style={styles.headerRightIcons}>
                 {
-                    right.map(({onPress, name}, index) => {
+                    right.map(({onPress, name, isFilled, cusColor}, index) => {
                         return <TouchableOpacity key={`${index}`} onPress={onPress}>
-                            <Feather name={name} size={24} style={{marginRight: 20}} />
+                            <Svg name={name} isFilled={isFilled} cusColor={cusColor} style={{marginRight: 20}} />
                         </TouchableOpacity>
                     })
                 }
@@ -66,6 +68,7 @@ const styles = StyleSheet.create({
     headerLabel: {
         fontSize: 24,
         fontWeight: 'bold',
+        marginLeft: 8,
     },
 });
 

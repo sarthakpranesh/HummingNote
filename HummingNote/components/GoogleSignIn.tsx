@@ -6,6 +6,7 @@ export default async function GoogleSignIn() {
         try {
             const result = await Google.logInAsync({
               androidClientId: `1034297543601-kp3hggjodllcecmj3iljs4pc9ptkvvvo.apps.googleusercontent.com`,
+              androidStandaloneAppClientId: `1034297543601-kp3hggjodllcecmj3iljs4pc9ptkvvvo.apps.googleusercontent.com`,
               scopes: ['profile', 'email'],
             });
         

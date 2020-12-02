@@ -7,13 +7,12 @@ import Layout from '../../constants/Layout';
 import { SharedElement } from 'react-navigation-shared-element';
 
 interface NoteProps {
-    id: string;
     title: string;
     body: string;
     onPress: () => void;
 }
 
-const Note = ({id, title, body, onPress}: NoteProps) => {
+const Note = ({title, body, onPress}: NoteProps) => {
 
     return (
         <View style={styles.noteContainer}>

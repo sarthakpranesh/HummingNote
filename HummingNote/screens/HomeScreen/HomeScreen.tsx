@@ -25,7 +25,7 @@ const HomeScreen = (props: any) => {
     <View style={[Styles.mainContainer, {paddingBottom: 0, paddingHorizontal: 0}]}>
       <Header
         left={[{name: "Humming Note", isLabel: true, onPress: () => console.log("label")}]}
-        right={[{name: "plus", onPress: () => console.log("Add mote")}]}
+        right={[{name: "Plus", onPress: () => console.log("Add mote")}]}
       />
       <Divider />
       <ScrollView
@@ -41,7 +41,7 @@ const HomeScreen = (props: any) => {
                 const onPress = () => {
                   props.navigation.navigate("Note", {index: notes.indexOf(item), _id: _id});
                 }
-                return <Note key={_id} id={_id} title={title} body={data} onPress={onPress} />
+                return <Note key={_id} title={title} body={data} onPress={onPress} />
               })
             }
           </View>
@@ -52,7 +52,7 @@ const HomeScreen = (props: any) => {
                 const onPress = () => {
                   props.navigation.navigate("Note", {index: notes.indexOf(item), _id: _id});
                 }
-                return <Note key={_id} id={_id} title={title} body={data} onPress={onPress} />
+                return <Note key={_id} title={title} body={data} onPress={onPress} />
               })
             }
           </View>
