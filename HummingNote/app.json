@@ -30,7 +30,13 @@
       "bundleIdentifier": "com.HummingNote"
     },
     "android": {
-      "package": "com.HummingNote"
+      "package": "com.HummingNote",
+      "config": {
+        "googleSignIn": {
+          "apiKey": "",
+          "certificateHash": ""
+        }
+      }
     }
   }
 }

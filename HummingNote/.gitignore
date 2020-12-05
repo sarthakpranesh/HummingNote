@@ -14,3 +14,5 @@ web-build/
 
 # secrets
 google-services.json
+
+.env
