@@ -9,6 +9,7 @@ const persistConfig = {
   storage: AsyncStorage,
   whitelist: [
     'userReducer',
+    'noteReducer',
   ],
   blacklist: [],
 };// Middleware: Redux Persist Persisted Reducer
