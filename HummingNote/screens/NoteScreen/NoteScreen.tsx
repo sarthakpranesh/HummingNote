@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Alert, StyleSheet, ScrollView} from 'react-native';
+import {Alert, StyleSheet, ScrollView, Vibration} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {View, Text, TextInput} from '../../components/Themed';
@@ -7,6 +7,7 @@ import {View, Text, TextInput} from '../../components/Themed';
 //importing components
 import Header from '../../components/Header/Header';
 import {updateNoteText, toggleNotePin, setNoteColor} from '../../components/Server/updateNote';
+import deleteNote from '../../components/Server/deleteNote';
 import {update} from '../../reducers/NoteReducer';
 
 //importing styles
@@ -93,6 +94,39 @@ const NoteScreen = (props: any) => {
         }
     }
 
+    const onPressDelete = async () => {
+        const sync = () => props.SyncReduxAndServer();
+        const back = () => props.navigation.goBack();
+        Vibration.vibrate(50, false)
+        Alert.alert(
+            "Delete",
+            "Once deleted then the note content cannot be recovered. Please make sure you don't have anything valuable saved. Proceed to delete?",
+            [
+                {text: "Delete", onPress: async () => {
+                    try {
+                        const didDelete = await deleteNote(props.user.uid, _id)
+                        if (didDelete.status !== 1) {
+                            console.log("Error in onPressDelete:", didDelete.message);
+                            Alert.alert("Application Error", didDelete.message)
+                        } else {
+                            Promise.all([
+                                back(),
+                                sync(),
+                            ])
+                        }
+                    } catch (err) {
+                        console.log("Error in onPressDelete:", err.message);
+                        Alert.alert("Application Error", err.message)
+                    }
+                }},
+                {text: "cancel"}
+            ],
+            {
+                cancelable: true,
+            }
+        )
+    }
+
     if (isEditing) {
         return (
             <View style={Styles.mainContainer}>
@@ -168,6 +202,10 @@ const NoteScreen = (props: any) => {
                         name: "Edit",
                         cusColor: color,
                         onPress: () => setIsEditing(true)
+                    },{
+                        name: "Delete",
+                        cusColor: color,
+                        onPress: () => onPressDelete()
                     }
                 ]}
             />

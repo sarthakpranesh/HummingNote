@@ -31,6 +31,9 @@ const CustomSvg = (props: CustomSvgType) => {
         case "Save":
             SVG = require("./Save").default;
             break;
+        case "Delete":
+            SVG = require("./Delete").default;
+            break;
         default:
             SVG = require("./Star").default;
     }

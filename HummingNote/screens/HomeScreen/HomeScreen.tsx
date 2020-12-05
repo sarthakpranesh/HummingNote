@@ -1,5 +1,5 @@
-import React from 'react';
-import {ScrollView, StyleSheet, Button} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, StyleSheet, Vibration} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {View, Text} from '../../components/Themed';
@@ -17,17 +17,42 @@ import Styles from '../../constants/Styles';
 import layout from '../../constants/Layout';
 const {width} = layout.window;
 
+import NoteList from './NoteList';
+
 const HomeScreen = (props: any) => {
+  const [isDeleteActive, setIsDeleteActive] = useState<boolean>(false);
+
+  const activateDelete = () => {
+    Promise.all([
+      setIsDeleteActive(true),
+      Vibration.vibrate(100, false),
+    ])
+  }
 
   const notes = props.note.notes;
-
   const pinnedNotes = notes.filter((note: any) => note.ispinned)
+
+  const homeScreenHeaderProps = (isDeleteActive: boolean) => {
+    if (isDeleteActive) {
+      return {
+        left: [{name: "Cross", onPress: () => console.log("Cancel")}],
+        right: [{name: "Plus", onPress: () => console.log("Delete")}],
+      }
+    }
+
+    return {
+      left: [{name: "Humming Note", isLabel: true, onPress: () => console.log("label")}],
+      right: [{name: "Plus", onPress: () => console.log("Add mote")}],
+    }
+  }
+
+  const headerProps = homeScreenHeaderProps(isDeleteActive);
 
   return (
     <View style={[Styles.mainContainer, {paddingBottom: 0, paddingHorizontal: 0}]}>
       <Header
-        left={[{name: "Humming Note", isLabel: true, onPress: () => console.log("label")}]}
-        right={[{name: "Plus", onPress: () => console.log("Add mote")}]}
+        left={headerProps.left}
+        right={headerProps.right}
       />
       <Divider />
       <ScrollView
@@ -36,55 +61,15 @@ const HomeScreen = (props: any) => {
         contentContainerStyle={styles.notesContainer}
       >
         <Text style={styles.noteContainerHeader}>Pinned</Text>
-        <View style={styles.noteContainerSide}>
-          <View style={styles.noteSideWrapper}>
-            {
-              pinnedNotes.filter((_: any, i: number) => i%2 === 0).map((item: any, index: number) => {
-                const {title, data, _id, color} = item;
-                const onPress = () => {
-                  props.navigation.navigate("Note", {index: notes.indexOf(item), _id: _id});
-                }
-                return <Note key={_id} title={title} color={color} body={data} onPress={onPress} />
-              })
-            }
-          </View>
-          <View style={styles.noteSideWrapper}>
-            {
-              pinnedNotes.filter((_: any, i: number) => i%2 !== 0).map((item: any, index: number) => {
-                const {title, data, _id, color} = item;
-                const onPress = () => {
-                  props.navigation.navigate("Note", {index: notes.indexOf(item), _id: _id});
-                }
-                return <Note key={_id} color={color} title={title} body={data} onPress={onPress} />
-              })
-            }
-          </View>
-        </View>
+        <NoteList
+          notes={pinnedNotes}
+          onPress={(index, _id) => props.navigation.navigate("Note", {index, _id})}
+        />
         <Text style={styles.noteContainerHeader}>All</Text>
-        <View style={styles.noteContainerSide}>
-          <View style={styles.noteSideWrapper}>
-            {
-              notes.filter((_: any, i: number) => i%2 === 0).map((item: any, index: number) => {
-                const {title, data, _id, color} = item;
-                const onPress = () => {
-                  props.navigation.navigate("Note", {index: notes.indexOf(item), _id: _id});
-                }
-                return <Note key={_id} color={color} title={title} body={data} onPress={onPress} />
-              })
-            }
-          </View>
-          <View style={styles.noteSideWrapper}>
-            {
-              notes.filter((_: any, i: number) => i%2 !== 0).map((item: any, index: number) => {
-                const {title, data, _id, color} = item;
-                const onPress = () => {
-                  props.navigation.navigate("Note", {index: notes.indexOf(item), _id: _id});
-                }
-                return <Note key={_id} color={color} title={title} body={data} onPress={onPress} />
-              })
-            }
-          </View>
-        </View>
+        <NoteList
+          notes={notes}
+          onPress={(index, _id) => props.navigation.navigate("Note", {index, _id})}
+        />
       </ScrollView>
       {/* <Button onPress={() => props.logout()} title="logout" /> */}
     </View>
