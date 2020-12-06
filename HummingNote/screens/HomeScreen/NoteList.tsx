@@ -12,7 +12,7 @@ export interface NoteListProps {
     onPress: (index: number, _id: string) => void,
 }
 
-const NoteList = ({notes, onPress, onLongPress}: NoteListProps) => {
+const NoteList = ({notes, onPress}: NoteListProps) => {
     return (
         <>
         <View style={styles.noteContainerSide}>

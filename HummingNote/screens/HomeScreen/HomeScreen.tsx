@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Vibration} from 'react-native';
+import {ScrollView, StyleSheet, Vibration, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {View, Text} from '../../components/Themed';
 
 // importing components
-import Note from '../../components/Note/Note';
 import Header from '../../components/Header/Header';
 import Divider from '../../components/Divider/Divider'
 import {logout} from '../../reducers/UserReducer';
+import {clear} from '../../reducers/NoteReducer';
 
 //importing Styles
 import Styles from '../../constants/Styles';
@@ -71,7 +71,7 @@ const HomeScreen = (props: any) => {
           onPress={(index, _id) => props.navigation.navigate("Note", {index, _id})}
         />
       </ScrollView>
-      {/* <Button onPress={() => props.logout()} title="logout" /> */}
+      <Button onPress={() => Promise.all([props.logout(), props.clear()])} title="logout" />
     </View>
   );
 }
@@ -109,6 +109,7 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => (
   bindActionCreators({
     logout,
+    clear,
   }, dispatch)
 );
 

@@ -69,11 +69,12 @@ const RootNavigator = connect(mapStateToProps, mapDispatchToProps)((props: any) 
 
   useEffect(() => {
     if (!props.authenticated) {
+      clearInterval();
       return;
     }
     SyncReduxAndServer()
     setInterval(SyncReduxAndServer, 300000)
-  }, [])
+  }, [props.authenticated])
 
   if (!loaded) {
     return <LoadingScreen hasLoaded={() => setLoaded(true)}/>
