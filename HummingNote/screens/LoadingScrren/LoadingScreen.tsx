@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View} from '../../components/Themed';
+import {SafeAreaView} from '../../components/Themed';
 import Svg from  'react-native-svg';
 import {Easing, useSharedValue, withTiming} from 'react-native-reanimated';
 
@@ -25,14 +25,14 @@ const LoadingScreen = (props: LoadingScreenProps) => {
     }, 4500);
     
     return (
-        <View style={Styles.container}>
+        <SafeAreaView style={Styles.container}>
             <Svg width={HmSvg.width} height={HmSvg.height} viewBox={`0 0 ${HmSvg.viewBoxWidth} ${HmSvg.viewBoxHight}`}>
                 {HmSvg.path.map((d, key) => (
                     <AnimatedStroke progress={progress} d={d} key={key} />
                 ))
                 }
             </Svg>
-        </View>
+        </SafeAreaView>
     )
 }
 

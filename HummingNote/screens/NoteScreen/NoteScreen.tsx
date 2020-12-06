@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Alert, StyleSheet, ScrollView, Vibration} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {View, Text, TextInput} from '../../components/Themed';
+import {View, Text, TextInput, SafeAreaView} from '../../components/Themed';
 
 //importing components
 import Header from '../../components/Header/Header';
@@ -129,6 +129,7 @@ const NoteScreen = (props: any) => {
 
     if (isEditing) {
         return (
+            <SafeAreaView>
             <View style={Styles.mainContainer}>
                 <Header
                     left={[
@@ -174,10 +175,12 @@ const NoteScreen = (props: any) => {
                     </View>
                 </ScrollView>
             </View>
+            </SafeAreaView>
         )
     }
 
     return (
+        <SafeAreaView>
         <View style={Styles.mainContainer}>
             <Header
                 left={[
@@ -220,6 +223,7 @@ const NoteScreen = (props: any) => {
                 </View>
             </ScrollView>
         </View>
+        </SafeAreaView>
     );
 }
 

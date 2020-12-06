@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import {Alert, Button, StyleSheet} from 'react-native';
-import {View} from '../../components/Themed';
+import {SafeAreaView, View} from '../../components/Themed';
 import Svg, {Path} from 'react-native-svg';
 
 import {connect} from 'react-redux';
@@ -41,7 +41,7 @@ const LoginScreen = (props: any) => {
     }
 
     return (
-        <View style={Styles.container}>
+        <SafeAreaView style={Styles.container}>
             <Svg width={HmSvg.width} height={HmSvg.height} viewBox={`0 0 ${HmSvg.viewBoxWidth} ${HmSvg.viewBoxHight}`}>
                 {HmSvg.path.map((d, key) => (
                     <Path stroke="white" strokeWidth={10} d={d} key={key} />
@@ -51,7 +51,7 @@ const LoginScreen = (props: any) => {
             <View style={styles.btnAbsolute}>
                 <Button onPress={onPress} title="Continue With Google" />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 

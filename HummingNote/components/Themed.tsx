@@ -4,6 +4,7 @@ import {
   View as DefaultView,
   TextInput as DefaultTextInput,
 } from 'react-native';
+import {SafeAreaView as DefaultSafeAreaView} from 'react-native-safe-area-context';
 import DefaultSvg, {CustomSvgType as DefaultSvgProps} from './Svg/index';
 
 import Colors from '../constants/Colors';
@@ -31,6 +32,7 @@ type ThemeProps = {
 export type TextProps = ThemeProps & DefaultText['props'];
 export type TextInputProps = ThemeProps & DefaultTextInput['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
+export type SafeAreaViewProps = ThemeProps & DefaultSafeAreaView['props'];
 export type SvgProps = ThemeProps & DefaultSvgProps;
 
 export function Text(props: TextProps) {
@@ -51,7 +53,14 @@ export function View(props: ViewProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
-  return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+  return <DefaultView style={[{backgroundColor}, style]} {...otherProps} />;
+}
+
+export function SafeAreaView(props: SafeAreaViewProps) {
+  const {style, lightColor, darkColor, ...otherProps} = props;
+  const backgroundColor = useThemeColor({light: lightColor, dark: darkColor}, 'background');
+
+  return <DefaultSafeAreaView style={[{backgroundColor, flex: 1}, style]} {...otherProps} />;
 }
 
 export function Svg(props: SvgProps) {

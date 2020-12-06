@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {ScrollView, StyleSheet, Vibration, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {View, Text} from '../../components/Themed';
+
+import {View, Text, SafeAreaView} from '../../components/Themed';
 
 // importing components
 import Header from '../../components/Header/Header';
@@ -49,6 +50,7 @@ const HomeScreen = (props: any) => {
   const headerProps = homeScreenHeaderProps(isDeleteActive);
 
   return (
+    <SafeAreaView>
     <View style={[Styles.mainContainer, {paddingBottom: 0, paddingHorizontal: 0}]}>
       <Header
         left={headerProps.left}
@@ -73,6 +75,7 @@ const HomeScreen = (props: any) => {
       </ScrollView>
       <Button onPress={() => Promise.all([props.logout(), props.clear()])} title="logout" />
     </View>
+    </SafeAreaView>
   );
 }
 
