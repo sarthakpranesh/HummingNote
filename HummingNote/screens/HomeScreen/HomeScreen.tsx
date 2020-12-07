@@ -43,7 +43,7 @@ const HomeScreen = (props: any) => {
 
     return {
       left: [{name: "Humming Note", isLabel: true, onPress: () => console.log("label")}],
-      right: [{name: "Plus", onPress: () => console.log("Add mote")}],
+      right: [{name: "Plus", onPress: () => props.navigation.navigate("AddNote")}],
     }
   }
 

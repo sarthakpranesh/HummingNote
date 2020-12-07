@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
         margin: 20,
         marginTop: 12,
         fontSize: 18,
-        textAlign: 'justify',
+        textAlign: 'left',
     }
 })
 

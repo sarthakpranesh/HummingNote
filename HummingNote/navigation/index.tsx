@@ -15,6 +15,7 @@ import LoadingScreen from '../screens/LoadingScrren/LoadingScreen';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import NoteScreen from '../screens/NoteScreen/NoteScreen';
+import AddNoteScreen from '../screens/AddNoteScreen/AddNoteScreen';
 
 // importing Components
 import fetchNotes from '../components/Server/fetchNotes';
@@ -90,6 +91,10 @@ const RootNavigator = connect(mapStateToProps, mapDispatchToProps)((props: any) 
       <Stack.Screen
         name="Note"
         component={(props) => <NoteScreen SyncReduxAndServer={SyncReduxAndServer}  {...props}/>}
+      />
+      <Stack.Screen
+        name="AddNote"
+        component={(props) => <AddNoteScreen SyncReduxAndServer={SyncReduxAndServer}  {...props}/>}
       />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>

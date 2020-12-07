@@ -3,6 +3,7 @@ import Animated from 'react-native-reanimated';
 export type RootStackParamList = {
   Home: undefined;
   Note: undefined;
+  AddNote: undefined;
   NotFound: undefined;
 };
 
