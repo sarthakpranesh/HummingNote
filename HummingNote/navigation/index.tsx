@@ -17,6 +17,7 @@ import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import NoteScreen from '../screens/NoteScreen/NoteScreen';
 import AddNoteScreen from '../screens/AddNoteScreen/AddNoteScreen';
+import SettingsScreen from '../screens/SettingsScreen/SettingsScreen';
 
 // importing Components
 import fetchNotes from '../components/Server/fetchNotes';
@@ -109,7 +110,7 @@ const DrawerNavigator = (props: any) => {
   return (
     <Drawer.Navigator initialRouteName="Home">
       <Drawer.Screen name="Home" component={HomeScreen} {...props} />
-      {/* <Drawer.Screen name="Notifications" /> */}
+      <Drawer.Screen name="Settings" component={SettingsScreen} {...props} />
     </Drawer.Navigator>
   )
 }

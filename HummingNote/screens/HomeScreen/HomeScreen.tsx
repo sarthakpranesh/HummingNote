@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Vibration, Button} from 'react-native';
+import {ScrollView, StyleSheet, Vibration} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -7,7 +7,7 @@ import {View, Text, SafeAreaView} from '../../components/Themed';
 
 // importing components
 import Header from '../../components/Header/Header';
-import Divider from '../../components/Divider/Divider'
+import Divider from '../../components/Divider/Divider';
 import {logout} from '../../reducers/UserReducer';
 import {clear} from '../../reducers/NoteReducer';
 
@@ -42,7 +42,7 @@ const HomeScreen = (props: any) => {
     }
 
     return {
-      left: [{name: "Humming Note", isLabel: true, onPress: () => console.log("label")}],
+      left: [{name: "Humming Note", isLabel: true, onPress: () => props.navigation.openDrawer()}],
       right: [{name: "Plus", onPress: () => props.navigation.navigate("AddNote")}],
     }
   }
@@ -76,7 +76,6 @@ const HomeScreen = (props: any) => {
           onPress={(index, _id) => props.navigation.navigate("Note", {index, _id})}
         />
       </ScrollView>
-      <Button onPress={() => Promise.all([props.logout(), props.clear()])} title="logout" />
     </View>
     </SafeAreaView>
   );
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   noteContainerHeader: {
-    marginLeft: 12,
+    marginLeft: 20,
     marginTop: 20,
   },
   noteContainerSide: {
