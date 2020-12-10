@@ -1,13 +1,14 @@
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
 import {enableScreens} from 'react-native-screens';
 import {createStackNavigator} from '@react-navigation/stack';
-import React, {useEffect, useState} from 'react';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {ColorSchemeName, Alert} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
-import {RootStackParamList} from '../types';
+import {RootStackParamList, DrawerParamList} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
 // importing screens
@@ -86,8 +87,8 @@ const RootNavigator = connect(mapStateToProps, mapDispatchToProps)((props: any) 
   }
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home" >
-      <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="DrawerNavigator" >
+      <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} {...props} />
       <Stack.Screen
         name="Note"
         component={(props) => <NoteScreen SyncReduxAndServer={SyncReduxAndServer}  {...props}/>}
@@ -100,3 +101,15 @@ const RootNavigator = connect(mapStateToProps, mapDispatchToProps)((props: any) 
     </Stack.Navigator>
   );
 })
+
+// Drawer Navigation will be used for everything after login and loading gets over
+const Drawer = createDrawerNavigator<DrawerParamList>();
+
+const DrawerNavigator = (props: any) => {
+  return (
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Screen name="Home" component={HomeScreen} {...props} />
+      {/* <Drawer.Screen name="Notifications" /> */}
+    </Drawer.Navigator>
+  )
+}
