@@ -65,7 +65,10 @@ const HomeScreen = (props: any) => {
         <Text style={styles.noteContainerHeader}>Pinned</Text>
         <NoteList
           notes={pinnedNotes}
-          onPress={(index, _id) => props.navigation.navigate("Note", {index, _id})}
+          onPress={(_, _id) => props.navigation.navigate("Note", {
+            index: notes.findIndex((note: any) => note._id === _id),
+            _id
+          })}
         />
         <Text style={styles.noteContainerHeader}>All</Text>
         <NoteList
