@@ -20,8 +20,12 @@ import AddNoteScreen from '../screens/AddNoteScreen/AddNoteScreen';
 import SettingsScreen from '../screens/SettingsScreen/SettingsScreen';
 
 // importing Components
+import DrawerContent from '../components/Drawer/DrawerContent';
 import fetchNotes from '../components/Server/fetchNotes';
 import {update} from '../reducers/NoteReducer';
+
+// importing Constants
+import Colors from '../constants/Colors';
 
 enableScreens();
 
@@ -108,7 +112,15 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const DrawerNavigator = (props: any) => {
   return (
-    <Drawer.Navigator initialRouteName="Home">
+    <Drawer.Navigator
+      initialRouteName="Home"
+      openByDefault={false}
+      drawerStyle={{
+        backgroundColor: Colors.dark.background,
+      }}
+      drawerContent={(props) => <DrawerContent {...props} />}
+      lazy={false}
+    >
       <Drawer.Screen name="Home" component={HomeScreen} {...props} />
       <Drawer.Screen name="Settings" component={SettingsScreen} {...props} />
     </Drawer.Navigator>

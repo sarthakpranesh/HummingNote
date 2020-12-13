@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import {SafeAreaView as DefaultSafeAreaView} from 'react-native-safe-area-context';
 import DefaultSvg, {CustomSvgType as DefaultSvgProps} from './Svg/index';
+import {DrawerItem as DefaultDrawerItem} from '@react-navigation/drawer';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -34,6 +35,7 @@ export type TextInputProps = ThemeProps & DefaultTextInput['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
 export type SafeAreaViewProps = ThemeProps & DefaultSafeAreaView['props'];
 export type SvgProps = ThemeProps & DefaultSvgProps;
+export type DrawerItemProps = ThemeProps & DefaultDrawerItem['props'];
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -68,4 +70,11 @@ export function Svg(props: SvgProps) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   return <DefaultSvg style={style} color={color} {...otherProps}/>;
+}
+
+export function DrawerItem(props: DrawerItemProps) {
+  const {style, lightColor, darkColor, labelStyle, ...otherProps} = props;
+  const color = useThemeColor({light: lightColor, dark: darkColor}, 'text');
+
+  return <DefaultDrawerItem labelStyle={[{color}, labelStyle]} style={style} {...otherProps} />;
 }
