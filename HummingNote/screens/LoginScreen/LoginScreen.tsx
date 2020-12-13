@@ -14,6 +14,7 @@ import {authenticate} from '../../reducers/UserReducer';
 import BackendAPI from '../../constants/APIs';
 import Styles from '../../constants/Styles';
 import * as HmSvg from '../../constants/HummingNoteSvg';
+import Colors from '../../constants/Colors';
 
 const LoginScreen = (props: any) => {
     const onPress = () => {
@@ -44,7 +45,7 @@ const LoginScreen = (props: any) => {
         <SafeAreaView style={Styles.container}>
             <Svg width={HmSvg.width} height={HmSvg.height} viewBox={`0 0 ${HmSvg.viewBoxWidth} ${HmSvg.viewBoxHight}`}>
                 {HmSvg.path.map((d, key) => (
-                    <Path stroke="white" strokeWidth={10} d={d} key={key} />
+                    <Path stroke={Colors.dark.text} strokeWidth={10} d={d} key={key} />
                 ))
                 }
             </Svg>

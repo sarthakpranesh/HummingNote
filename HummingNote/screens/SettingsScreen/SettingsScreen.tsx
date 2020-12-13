@@ -51,4 +51,4 @@ const mapDispatchToProps = (dispatch: any) => (
     }, dispatch)
 );
 
-export default connect(mapDispatchToProps)(SettingsScreen);
+export default connect(null, mapDispatchToProps)(SettingsScreen);
