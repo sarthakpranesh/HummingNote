@@ -10,7 +10,7 @@
 
 ## About
 
-Note taking app inspired from Google Keep and Humming Birds
+Note taking app inspired from Google Keep and Hummingbird
 
 <br />
 
