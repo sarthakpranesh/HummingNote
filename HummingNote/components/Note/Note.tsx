@@ -4,8 +4,6 @@ import {View, Text} from '../Themed';
 
 //importing constants
 import Layout from '../../constants/Layout';
-import { SharedElement } from 'react-navigation-shared-element';
-import { color } from 'react-native-reanimated';
 
 interface NoteProps {
     color: string;
@@ -20,7 +18,8 @@ const Note = ({color, title, body, onPress}: NoteProps) => {
         <View style={styles.noteContainer}>
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.noteBox}>
-                    <View style={[styles.colorMarker,{backgroundColor: color}]}/>
+                    {/* Adding key equal to color to force the view (dot) to re-render (helps make sure view doesn't have square shape) */}
+                    <View key={color} style={[styles.colorMarker, {backgroundColor: color}]} />
                     <Text style={styles.title}>{title}</Text>
                     <Text style={styles.body}>{body}</Text>
                 </View>
