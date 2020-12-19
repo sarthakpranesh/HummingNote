@@ -109,10 +109,8 @@ const NoteScreen = (props: any) => {
                             console.log("Error in onPressDelete:", didDelete.message);
                             Alert.alert("Application Error", didDelete.message)
                         } else {
-                            Promise.all([
-                                back(),
-                                sync(),
-                            ])
+                            await back();
+                            sync();
                         }
                     } catch (err) {
                         console.log("Error in onPressDelete:", err.message);
