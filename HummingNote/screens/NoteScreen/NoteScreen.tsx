@@ -18,7 +18,12 @@ import Colors from '../../constants/Colors';
 
 const NoteScreen = (props: any) => {
     const {index, _id} = props.route.params;
-    const note = props.note.notes[index];
+    const note = props.note.notes[index] ? props.note.notes[index] : {
+        title: "",
+        data: "",
+        ispinned: false,
+        color: Colors.dark.app[0],
+    };
 
     const [title, setTitle] = useState<string>(note.title);
     const [data, setData] = useState<string>(note.data);
