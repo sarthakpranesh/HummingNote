@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Vibration} from 'react-native';
+import {ScrollView, StyleSheet, Vibration, RefreshControl} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -21,6 +21,7 @@ const {width} = layout.window;
 import NoteList from './NoteList';
 
 const HomeScreen = (props: any) => {
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   const [isDeleteActive, setIsDeleteActive] = useState<boolean>(false);
 
   const activateDelete = () => {
@@ -28,6 +29,12 @@ const HomeScreen = (props: any) => {
       setIsDeleteActive(true),
       Vibration.vibrate(100, false),
     ])
+  }
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await props.SyncReduxAndServer();
+    setRefreshing(false);
   }
 
   const notes = props.note.notes;
@@ -61,6 +68,7 @@ const HomeScreen = (props: any) => {
         alwaysBounceVertical={true}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.notesContainer}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
         <Text style={styles.noteContainerHeader}>Pinned</Text>
         <NoteList

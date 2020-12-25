@@ -93,15 +93,22 @@ const RootNavigator = connect(mapStateToProps, mapDispatchToProps)((props: any) 
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="DrawerNavigator" >
-      <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} {...props} />
+      <Stack.Screen
+        name="DrawerNavigator"
+        {...props}
+      >
+        {(p) => <DrawerNavigator SyncReduxAndServer={SyncReduxAndServer} {...p} />}
+      </Stack.Screen>
       <Stack.Screen
         name="Note"
-        component={(props) => <NoteScreen SyncReduxAndServer={SyncReduxAndServer}  {...props}/>}
-      />
+      >
+        {(p) => <NoteScreen SyncReduxAndServer={SyncReduxAndServer} {...p}/>}
+      </Stack.Screen>
       <Stack.Screen
         name="AddNote"
-        component={(props) => <AddNoteScreen SyncReduxAndServer={SyncReduxAndServer}  {...props}/>}
-      />
+      >
+        {(p) => <AddNoteScreen SyncReduxAndServer={SyncReduxAndServer}  {...p}/>}
+      </Stack.Screen>
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );
@@ -121,7 +128,12 @@ const DrawerNavigator = (props: any) => {
       drawerContent={(props) => <DrawerContent {...props} />}
       lazy={false}
     >
-      <Drawer.Screen name="Home" component={HomeScreen} {...props} />
+      <Drawer.Screen
+        name="Home"
+        {...props}
+      >
+        {(p) => <HomeScreen SyncReduxAndServer={props.SyncReduxAndServer} {...p} />}
+      </Drawer.Screen>
       <Drawer.Screen name="Settings" component={SettingsScreen} {...props} />
     </Drawer.Navigator>
   )
