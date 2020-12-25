@@ -6,7 +6,7 @@
     "name": "HummingNote",
     "description": "Note taking app with modern UI",
     "slug": "humming-note",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "platforms": ["ios", "android"],
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
