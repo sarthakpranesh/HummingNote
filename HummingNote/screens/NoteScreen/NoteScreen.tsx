@@ -48,7 +48,8 @@ const NoteScreen = (props: any) => {
             const updated = await updateNoteText(props.user.uid, {
                 _id: _id,
                 data: newData,
-                title: newTitle
+                title: newTitle,
+                ispinned: pinned,
             })
             if (updated.status !== 1) {
                 Alert.alert("Server Error:", updated.message);
@@ -87,7 +88,8 @@ const NoteScreen = (props: any) => {
         try {
             const updated = await setNoteColor(props.user.uid, {
                 _id: _id,
-                color: newColor
+                color: newColor,
+                ispinned: pinned,
             })
             if (updated.status !== 1) {
                 Alert.alert("Server Error:", updated.message);

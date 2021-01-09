@@ -10,6 +10,7 @@ export interface updateNoteTextProps {
     _id: string,
     title: string | null,
     data: string | null,
+    ispinned: boolean, // needs to be their or defaults to 'false' in server
 }
 
 export const updateNoteText = (uid: string, updatedNote:updateNoteTextProps): Promise<updateNoteReturn> => {  
@@ -72,6 +73,7 @@ export const toggleNotePin = (uid: string, pinUpdate: toggleNotePinParam): Promi
 export interface setNoteColorParams {
     _id: string,
     color: string,
+    ispinned: boolean, // needs to be their or defaults to 'false' in server
 }
 
 export const setNoteColor = (uid: string, colorUpdate: setNoteColorParams): Promise<updateNoteReturn> => {
