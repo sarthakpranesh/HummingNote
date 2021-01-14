@@ -2,11 +2,14 @@ import React, {useRef, useState} from 'react';
 import {Path} from 'react-native-svg';
 import Animated, {Easing, useAnimatedProps} from 'react-native-reanimated';
 
-//importing types
+// importing constants
+import Colors from '../../constants/Colors';
+
+// importing types
 import {AnimatedStrokeProps} from '../../types'; 
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
-const colors = ["#6fe7dd", "#6639a6", "#e94560"];
+const colors = Colors.dark.app;
 
 const AnimatedStroke = ({d, progress}: AnimatedStrokeProps) => {
     const [length, setLength] = useState(0);
@@ -35,7 +38,7 @@ const AnimatedStroke = ({d, progress}: AnimatedStrokeProps) => {
           onLayout={() => setLength(ref.current.getTotalLength())}
           ref={ref}
           d={d}
-          stroke='#bbe1fa'
+          stroke={colors[0]}
           strokeWidth={length === 0 ? 0 : 10}
           strokeDasharray={length}
         />

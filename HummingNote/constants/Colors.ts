@@ -1,5 +1,5 @@
 const tintColor = '#3282b8';
-const appColors = ["#bbe1fa", "#6fe7dd", "#6639a6", "#e94560"];
+const appColors = ["#bbe1fa", "#6fe7dd", "#FFFF66", "#e94560"];
 
 export default {
   light: {
