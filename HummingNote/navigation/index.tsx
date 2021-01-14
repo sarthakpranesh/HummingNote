@@ -18,6 +18,7 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import NoteScreen from '../screens/NoteScreen/NoteScreen';
 import AddNoteScreen from '../screens/AddNoteScreen/AddNoteScreen';
 import SettingsScreen from '../screens/SettingsScreen/SettingsScreen';
+import AboutScreen from '../screens/AboutScreen/AboutScreen';
 
 // importing Components
 import DrawerContent from '../components/Drawer/DrawerContent';
@@ -135,6 +136,7 @@ const DrawerNavigator = (props: any) => {
         {(p) => <HomeScreen SyncReduxAndServer={props.SyncReduxAndServer} {...p} />}
       </Drawer.Screen>
       <Drawer.Screen name="Settings" component={SettingsScreen} {...props} />
+      <Drawer.Screen name="About" component={AboutScreen} {...props} />
     </Drawer.Navigator>
   )
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import {Alert, Button, StyleSheet} from 'react-native';
-import {SafeAreaView, View} from '../../components/Themed';
 import Svg, {Path} from 'react-native-svg';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 //importing components
+import {SafeAreaView, View} from '../../components/Themed';
 import GoogleSignIn from '../../components/GoogleSignIn';
 import {authenticate} from '../../reducers/UserReducer';
 

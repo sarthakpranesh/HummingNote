@@ -14,5 +14,12 @@ export default StyleSheet.create({
         alignItems: 'flex-start',
         paddingVertical: 20,
         paddingHorizontal: 6,
-    }
+    },
+    hummingImageLogo: {
+        width: 80,
+        height: 80,
+        borderRadius: 8,
+        alignSelf: 'center',
+        marginVertical: 40,
+    },
 })

@@ -26,9 +26,12 @@ export type User = {
   uid: string; 
 }
 
+// Screen Params
 export type LoadingScreenProps = {
   hasLoaded: () => void;
 }
+
+export type AboutScreenProps = any;
 
 export type AnimatedStrokeProps = {
   d: string;
