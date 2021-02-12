@@ -12,8 +12,7 @@ import {RootStackParamList, DrawerParamList} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
 // importing screens
-import LoadingScreen from '../screens/LoadingScrren/LoadingScreen';
-import LoginScreen from '../screens/LoginScreen/LoginScreen';
+import SplashScreen from '../screens/SplashScreen/SplashScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import NoteScreen from '../screens/NoteScreen/NoteScreen';
 import AddNoteScreen from '../screens/AddNoteScreen/AddNoteScreen';
@@ -83,12 +82,8 @@ const RootNavigator = connect(mapStateToProps, mapDispatchToProps)((props: any) 
     setInterval(SyncReduxAndServer, 300000)
   }, [props.authenticated])
 
-  if (!loaded) {
-    return <LoadingScreen hasLoaded={() => setLoaded(true)}/>
-  }
-
-  if (!props.authenticated) {
-    return <LoginScreen />
+  if (!loaded || !props.authenticated) {
+    return <SplashScreen hasLoaded={() => setLoaded(true)}/>
   }
 
   return (

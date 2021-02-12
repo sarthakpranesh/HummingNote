@@ -26,10 +26,6 @@ export type User = {
   uid: string; 
 }
 
-export type LoadingScreenProps = {
-  hasLoaded: () => void;
-}
-
 export type AnimatedStrokeProps = {
   d: string;
   progress: Animated.SharedValue<number>;
