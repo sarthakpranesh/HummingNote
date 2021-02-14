@@ -2,44 +2,27 @@ import React, {useEffect, useState} from 'react';
 import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
 import {enableScreens} from 'react-native-screens';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import {ColorSchemeName, Alert} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
-import {RootStackParamList, DrawerParamList} from '../types';
+import {RootStackParamList} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
 // importing screens
 import SplashScreen from '../screens/SplashScreen/SplashScreen';
-import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import NoteScreen from '../screens/NoteScreen/NoteScreen';
 import AddNoteScreen from '../screens/AddNoteScreen/AddNoteScreen';
-import SettingsScreen from '../screens/SettingsScreen/SettingsScreen';
 
 // importing Components
-import DrawerContent from '../components/Drawer/DrawerContent';
 import fetchNotes from '../components/Server/fetchNotes';
 import {update} from '../reducers/NoteReducer';
 
-// importing Constants
-import Colors from '../constants/Colors';
+// importing Navigators
+import DrawerNavigator from './DrawerNavigator';
 
 enableScreens();
-
-// If you are not familiar with React Navigation, we recommend going through the
-// "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-
-  return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
-    </NavigationContainer>
-  );
-}
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
@@ -82,54 +65,36 @@ const RootNavigator = connect(mapStateToProps, mapDispatchToProps)((props: any) 
     setInterval(SyncReduxAndServer, 300000)
   }, [props.authenticated])
 
-  if (!loaded || !props.authenticated) {
-    return <SplashScreen hasLoaded={() => setLoaded(true)}/>
-  }
-
-  return (
-    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="DrawerNavigator" >
+  return !loaded || !props.authenticated ? (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="splash">
+        {(p) => <SplashScreen hasLoaded={() => setLoaded(true)} {...p} />}
+      </Stack.Screen>
+    </Stack.Navigator>
+  ) : (
+    <Stack.Navigator
+      screenOptions={{headerShown: false}}
+      initialRouteName="Drawer"
+    >
       <Stack.Screen
-        name="DrawerNavigator"
+        name="Drawer"
         {...props}
       >
         {(p) => <DrawerNavigator SyncReduxAndServer={SyncReduxAndServer} {...p} />}
-      </Stack.Screen>
-      <Stack.Screen
-        name="Note"
-      >
-        {(p) => <NoteScreen SyncReduxAndServer={SyncReduxAndServer} {...p}/>}
-      </Stack.Screen>
-      <Stack.Screen
-        name="AddNote"
-      >
-        {(p) => <AddNoteScreen SyncReduxAndServer={SyncReduxAndServer}  {...p}/>}
       </Stack.Screen>
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );
 })
 
-// Drawer Navigation will be used for everything after login and loading gets over
-const Drawer = createDrawerNavigator<DrawerParamList>();
-
-const DrawerNavigator = (props: any) => {
+// If you are not familiar with React Navigation, we recommend going through the
+// "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
+export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
-    <Drawer.Navigator
-      initialRouteName="Home"
-      openByDefault={false}
-      drawerStyle={{
-        backgroundColor: Colors.dark.background,
-      }}
-      drawerContent={(props) => <DrawerContent {...props} />}
-      lazy={false}
-    >
-      <Drawer.Screen
-        name="Home"
-        {...props}
-      >
-        {(p) => <HomeScreen SyncReduxAndServer={props.SyncReduxAndServer} {...p} />}
-      </Drawer.Screen>
-      <Drawer.Screen name="Settings" component={SettingsScreen} {...props} />
-    </Drawer.Navigator>
-  )
+    <NavigationContainer
+      linking={LinkingConfiguration}
+      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <RootNavigator />
+    </NavigationContainer>
+  );
 }

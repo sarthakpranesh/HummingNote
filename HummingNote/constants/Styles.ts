@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import Layout from './Layout';
 
 export default StyleSheet.create({
     container: {
@@ -7,12 +8,13 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     mainContainer: {
+        width: Layout.isLargeDevice ? 300*3 : Layout.window.width,
+        alignSelf: 'center',
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        paddingVertical: 20,
         paddingHorizontal: 6,
     }
 })

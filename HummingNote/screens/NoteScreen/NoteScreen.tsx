@@ -15,6 +15,7 @@ import Styles from '../../constants/Styles';
 
 //importing Constants
 import Colors from '../../constants/Colors';
+import Layout from '../../constants/Layout';
 
 const NoteScreen = (props: any) => {
     const {index, _id} = props.route.params;
@@ -135,7 +136,6 @@ const NoteScreen = (props: any) => {
     if (isEditing) {
         return (
             <SafeAreaView>
-            <View style={Styles.mainContainer}>
                 <Header
                     left={[
                         {
@@ -155,7 +155,9 @@ const NoteScreen = (props: any) => {
                             onPress: onPressSave,
                         }
                     ]}
+                    {...props}
                 />
+            <View style={Styles.mainContainer}>
                 <ScrollView
                     alwaysBounceVertical={true}
                     showsVerticalScrollIndicator={false}
@@ -168,11 +170,7 @@ const NoteScreen = (props: any) => {
                             onChangeText={(t) => setNewTitle(t)}
                         />
                         <TextInput
-                            style={[styles.noteBody, {
-                                color,
-                                marginBottom: 0,
-                                paddingBottom: 20,
-                            }]}
+                            style={[styles.noteBodyInput, {color}]}
                             value={newData}
                             onChangeText={(b) => setNewData(b)}
                             multiline={true}
@@ -186,7 +184,6 @@ const NoteScreen = (props: any) => {
 
     return (
         <SafeAreaView>
-        <View style={Styles.mainContainer}>
             <Header
                 left={[
                     {
@@ -216,25 +213,27 @@ const NoteScreen = (props: any) => {
                         onPress: () => onPressDelete()
                     }
                 ]}
+                {...props}
             />
-            <ScrollView
-                alwaysBounceVertical={true}
-                showsVerticalScrollIndicator={false}
-                style={{marginTop: 12}}
-            >
-                <View style={styles.noteContainer}>
-                    <Text style={[styles.noteTitle, {color}]}>{title}</Text>
-                    <Text style={[styles.noteBody, {color}]}>{data}</Text>
-                </View>
-            </ScrollView>
-        </View>
+            <View style={Styles.mainContainer}>
+                <ScrollView
+                    alwaysBounceVertical={true}
+                    showsVerticalScrollIndicator={false}
+                    style={{marginTop: 12}}
+                >
+                    <View style={styles.noteContainer}>
+                        <Text style={[styles.noteTitle, {color}]}>{title}</Text>
+                        <Text style={[styles.noteBody, {color}]}>{data}</Text>
+                    </View>
+                </ScrollView>
+            </View>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     noteContainer: {
-        marginTop: 20,
+        marginTop: Layout.isLargeDevice ? 20 : 0,
     },
     noteTitle: {
         margin: 20,
@@ -243,11 +242,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'left',
     },
+    noteBodyInput: {
+        margin: 20,
+        marginTop: 0,
+        fontSize: 18,
+        textAlign: 'justify',
+    },
     noteBody: {
         margin: 20,
         marginTop: 12,
         fontSize: 18,
-        textAlign: 'left',
+        textAlign: 'justify',
     }
 })
 

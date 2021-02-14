@@ -6,14 +6,14 @@ interface BackendAPIParams {
 }
 
 const API = "https://humming-server.herokuapp.com/";
+// const API = "localhost:8080/";
 
 const BackendAPI = ({route, auth, method, body}: BackendAPIParams) => {
     return fetch(API + route, {
         method: method,
         headers: {
             Authorization: "Bearer " + auth,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         },
         body: body !== null ? JSON.stringify(body) : null,
     })

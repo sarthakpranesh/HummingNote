@@ -1,4 +1,5 @@
 import React from 'react';
+import {StackHeaderProps} from '@react-navigation/stack';
 import {StyleSheet} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {View, Svg, Text} from '../Themed';
@@ -14,29 +15,34 @@ interface IconObject {
     isLabel?: boolean;
 }
 
-interface HeaderProps {
-    left: IconObject [];
-    right: IconObject [];
+export type HeaderProps = StackHeaderProps & {
+    left: IconObject[];
+    right: IconObject[];
 }
 
-const Header = ({left, right}: HeaderProps) => {
+const Header = ({left, right, ...props}: HeaderProps) => {
 
     return (
-        <View style={styles.headerContainer}>
-            {
-                left.map(({onPress, name, isLabel, isFilled, cusColor}, index) => {
-                    if (isLabel) {
-                        return <TouchableOpacity key={`${index}`} onPress={onPress}>
-                            <Text style={styles.headerLabel}>{name}</Text>
-                        </TouchableOpacity>
-                    }
+        <View
+            style={styles.headerContainer}
+            {...props} 
+        >
+            <View style={styles.headerLeftWrapper}>
+                {
+                    left.map(({onPress, name, isLabel, isFilled, cusColor}, index) => {
+                        if (isLabel) {
+                            return <TouchableOpacity key={`${index}`} onPress={onPress}>
+                                <Text style={styles.headerLabel}>{name}</Text>
+                            </TouchableOpacity>
+                        }
 
-                    return <TouchableOpacity key={`${index}`} onPress={onPress}>
-                        <Svg name={name} isFilled={isFilled} cusColor={cusColor} />
-                    </TouchableOpacity>
-                })
-            }
-            <View style={styles.headerRightIcons}>
+                        return <TouchableOpacity key={`${index}`} onPress={onPress}>
+                            <Svg name={name} isFilled={isFilled} cusColor={cusColor} style={styles.headerLabel}/>
+                        </TouchableOpacity>
+                    })
+                }
+            </View>
+            <View style={styles.headerRightWrapper}>
                 {
                     right.map(({onPress, name, isFilled, cusColor}, index) => {
                         return <TouchableOpacity key={`${index}`} onPress={onPress}>
@@ -51,18 +57,24 @@ const Header = ({left, right}: HeaderProps) => {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        width: Layout.window.width,
-        height: 30,
-        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        paddingVertical: 20,
         paddingHorizontal: 10,
+        alignSelf: 'center',
+        width: Layout.isLargeDevice ? 300 * 3 : Layout.window.width,
     },
-    headerRightIcons: {
+    headerRightWrapper: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    headerLeftWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
     headerLabel: {

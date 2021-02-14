@@ -30,8 +30,8 @@ const Note = ({color, title, body, onPress}: NoteProps) => {
 
 const styles = StyleSheet.create({
     noteContainer: {
-        width: (Layout.window.width / 2) - 6,
-        maxHeight: Layout.window.height*0.3,
+        width: Layout.isLargeDevice ? 300 : (Layout.window.width / 2),
+        maxHeight: Layout.isLargeDevice ? 600 : Layout.window.height*0.3,
     },
     noteBox: {
         borderColor: 'rgba(255, 255, 255, 0.6)',
@@ -51,13 +51,13 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
     title: {
-        fontSize: 18,
+        fontSize: Layout.isLargeDevice ? 24 : 18,
         fontWeight: 'bold',
         textAlign: 'left',
     },
     body: {
         marginTop: 12,
-        fontSize: 12,
+        fontSize: Layout.isLargeDevice ? 18 : 12,
         fontWeight: '600',
         textAlign: 'justify',
     }

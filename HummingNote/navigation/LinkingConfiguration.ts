@@ -4,18 +4,16 @@ export default {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
-      Root: {
+      Drawer: {
         screens: {
-          TabOne: {
+          HomeStack: {
             screens: {
-              TabOneScreen: 'one',
+              Home: "home",
+              Note: "note",
+              AddNote: "add",
             },
           },
-          TabTwo: {
-            screens: {
-              TabTwoScreen: 'two',
-            },
-          },
+          Settings: "settings",
         },
       },
       NotFound: '*',

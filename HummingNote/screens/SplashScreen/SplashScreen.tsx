@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {TouchableOpacity, StyleSheet, Alert} from 'react-native';
-import {SafeAreaView, Text} from '../../components/Themed';
+import {StyleSheet, Alert} from 'react-native';
+import {SafeAreaView} from '../../components/Themed';
 import Svg from  'react-native-svg';
 import Animated, {
     Easing,
@@ -15,7 +15,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 //importing components
-import GoogleSignIn from '../../components/GoogleSignIn';
+import WebGoogleSignIn from '../../components/WebGoogleSignIn';
 import {authenticate} from '../../reducers/UserReducer';
 
 //importing constants
@@ -44,33 +44,30 @@ export type LoadingScreenProps = ConnectedProps<typeof connector> & {
 }
 
 const SplashScreen = (props: LoadingScreenProps) => {
-
     const progress = useSharedValue(0);
     const animateIn = useSharedValue(0);
 
-    const onPress = () => {
-        GoogleSignIn()
-            .then((user: any) => {
-                return BackendAPI({route: "auth", method: "POST", body: {email: user.email, uid: user.id}})
-            })
-            .then((respJson) => respJson.json())
-            .then((resp: any) => {
-                if (resp.status === 1) {
-                    props.authenticate({email: resp.Payload.user.email, uid: resp.Payload.user.uid});
+    const onGetUser = (user: any) => {
+        console.log("From Splash Screen - Got Data:", user);
+        BackendAPI({route: "auth", method: "POST", body: {email: user.email, uid: user.id}})
+            .then((j) => j.json())
+            .then((j) => {
+                if (j.status === 1) {
+                    props.authenticate({email: j.Payload.user.email, uid: j.Payload.user.uid});
                     callHasLoaded();
                 } else {
                     Alert.alert(
                         "Authentication",
-                        resp.message,
+                        j.message,
                         [{text: "Exit", onPress: () => console.log('exit')}],
                         {cancelable: false,}
                     )
                 }
             })
-            .catch((err) => {
-                console.log("Login Screen Error:", err.message);
-                console.log("@@@@@@@@@@@@@@@@");
+            .catch((error) => {
+                console.log("Backend API:", error);
             })
+        // callHasLoaded();
     }
 
     const callHasLoaded = () => {
@@ -104,9 +101,10 @@ const SplashScreen = (props: LoadingScreenProps) => {
     return (
         <SafeAreaView style={Styles.container}>
             <Svg width={HmSvg.width} height={HmSvg.height} viewBox={`0 0 ${HmSvg.viewBoxWidth} ${HmSvg.viewBoxHight}`}>
-                {HmSvg.path.map((d, key) => (
-                    <AnimatedStroke progress={progress} d={d} key={key} />
-                ))
+                {
+                    HmSvg.path.map((d, key) => (
+                        <AnimatedStroke progress={progress} d={d} key={key} />
+                    ))
                 }
             </Svg>
             {
@@ -117,9 +115,7 @@ const SplashScreen = (props: LoadingScreenProps) => {
                             animatedButtonProps,
                         ]}
                     >
-                        <TouchableOpacity onPress={onPress}>
-                            <Text>Continue With Google</Text>
-                        </TouchableOpacity>
+                        <WebGoogleSignIn onGetUser={onGetUser} />
                     </Animated.View>
                 ) : null
             }

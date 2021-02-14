@@ -17,12 +17,12 @@ import Styles from '../../constants/Styles';
 const SettingsScreen = (props: any) => {
     return (
         <SafeAreaView>
-        <View style={[Styles.mainContainer]}>
             <Header
                 left={[{name: "Humming Note", isLabel: true, onPress: () => props.navigation.openDrawer()}]}
                 right={[]}
+                {...props}
             />
-            <Divider />
+        <View style={[Styles.mainContainer]}>
             <ScrollView
                 alwaysBounceVertical={true}
                 showsVerticalScrollIndicator={false}
