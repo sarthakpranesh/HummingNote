@@ -5,6 +5,7 @@ import {View} from '../../components/Themed';
 import Note from '../../components/Note/Note';
 
 import layout from '../../constants/Layout';
+import Layout from '../../constants/Layout';
 const width = layout.window.width;
 
 export interface NoteListProps {
@@ -14,51 +15,31 @@ export interface NoteListProps {
 
 const NoteList = ({notes, onPress}: NoteListProps) => {
     return (
-        <>
         <View style={styles.noteContainerSide}>
-            <View style={styles.noteSideWrapper}>
-                {
-                    notes.filter((_: any, i: number) => i%2 === 0).map((item: any, index: number) => {
-                        const {title, data, _id, color} = item;
-                        return <Note
-                            key={_id}
-                            color={color}
-                            title={title}
-                            body={data}
-                            onPress={() => onPress(notes.indexOf(item), _id)}
-                        />
-                    })
-                }
-            </View>
-            <View style={styles.noteSideWrapper}>
-                {
-                    notes.filter((_: any, i: number) => i%2 !== 0).map((item: any, index: number) => {
-                        const {title, data, _id, color} = item;
-                        return <Note
-                            key={_id}
-                            color={color}
-                            title={title}
-                            body={data}
-                            onPress={() => onPress(notes.indexOf(item), _id)}
-                        />
-                    })
-                }
-            </View>
+            {
+                notes.map((item: any, index: number) => {
+                    const {title, data, _id, color} = item;
+                    return <Note
+                        key={_id}
+                        color={color}
+                        title={title}
+                        body={data}
+                        onPress={() => onPress(notes.indexOf(item), _id)}
+                    />
+                })
+            }
         </View>
-        </>
     )
 }
 
 const styles = StyleSheet.create({
-    noteSideWrapper: {
-        width: width / 2,
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
-    },
     noteContainerSide: {
-      display: "flex",
-      flexDirection: "row",
+        margin: Layout.isLargeDevice ? 20 : 0,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flexWrap: 'wrap',
+        width: Layout.isLargeDevice ? 300*3 : width,
     },
   });
 

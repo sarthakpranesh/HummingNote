@@ -2,7 +2,7 @@ import Layout from './Layout';
 
 export const viewBoxWidth = 846 + 20;
 export const viewBoxHight = 381 + 20;
-export const width = Layout.window.width - 64;
+export const width = Layout.isSmallDevice ? Layout.window.width - 64 : 300;
 export const height = width * (viewBoxHight / viewBoxWidth);
 export const path = [
     "M109.781 145H90.9336V79.2773H19.2539V145H0.503906V2.8125H19.2539V63.9453H90.9336V2.8125H109.781V145Z",

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StyleSheet, ScrollView, Vibration, Alert} from 'react-native';
+import {StyleSheet, ScrollView, Vibration, Alert, Platform} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {View, TextInput, SafeAreaView} from '../../components/Themed';
@@ -7,8 +7,10 @@ import {View, TextInput, SafeAreaView} from '../../components/Themed';
 //importing components
 import Header from '../../components/Header/Header';
 import addNote from '../../components/Server/addNote';
-
 import {update} from '../../reducers/NoteReducer';
+
+// importing constants
+import Layout from '../../constants/Layout';
 
 //importing styles
 import Styles from '../../constants/Styles';
@@ -20,6 +22,9 @@ const AddNoteScreen = (props: any) => {
 
     const onPressCancel = () => {
         Vibration.vibrate(50);
+        if (Platform.OS === "web") {
+            return props.navigation.goBack()
+        }
         Alert.alert(
             "Discard?",
             "All data written in this note will be discarded! Proceed?",
@@ -53,7 +58,6 @@ const AddNoteScreen = (props: any) => {
 
     return (
         <SafeAreaView>
-        <View style={Styles.mainContainer}>
             <Header
                 left={[
                     {
@@ -67,40 +71,42 @@ const AddNoteScreen = (props: any) => {
                         onPress: onPressAdd,
                     }
                 ]}
+                {...props}
             />
-            <ScrollView
-                alwaysBounceVertical={true}
-                showsVerticalScrollIndicator={false}
-                style={{marginTop: 12}}
-            >
-                <View style={styles.noteContainer}>
-                    <TextInput
-                        style={[styles.noteTitle]}
-                        value={title}
-                        placeholder="Title"
-                        onChangeText={(t) => setTitle(t)}
-                    />
-                    <TextInput
-                        style={[styles.noteBody, {
-                            marginBottom: 0,
-                            paddingBottom: 20,
-                        }]}
-                        value={data}
-                        placeholder="Note"
-                        autoFocus={true}
-                        onChangeText={(b) => setData(b)}
-                        multiline={true}
-                    />
-                </View>
-            </ScrollView>
-        </View>
+            <View style={Styles.mainContainer}>
+                <ScrollView
+                    alwaysBounceVertical={true}
+                    showsVerticalScrollIndicator={false}
+                    style={{marginTop: 12}}
+                >
+                    <View style={styles.noteContainer}>
+                        <TextInput
+                            style={[styles.noteTitle]}
+                            value={title}
+                            placeholder="Title"
+                            onChangeText={(t) => setTitle(t)}
+                        />
+                        <TextInput
+                            style={[styles.noteBody, {
+                                marginBottom: 0,
+                                paddingBottom: 20,
+                            }]}
+                            value={data}
+                            placeholder="Note"
+                            autoFocus={true}
+                            onChangeText={(b) => setData(b)}
+                            multiline={true}
+                        />
+                    </View>
+                </ScrollView>
+            </View>
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     noteContainer: {
-        marginTop: 20,
+        marginTop: Layout.isLargeDevice ? 20 : 0,
     },
     noteTitle: {
         margin: 20,

@@ -10,9 +10,20 @@ import (
 	"github.com/sarthakpranesh/HummingNote/models/user"
 )
 
+func setupResponse(w *http.ResponseWriter, req *http.Request) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
+	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+}
+
 // AuthCheck makes sure if the request is authenticated or not
 func AuthCheck(next http.HandlerFunc) http.HandlerFunc {
 	return func(res http.ResponseWriter, req *http.Request) {
+		setupResponse(&res, req)
+		if req.Method == "OPTIONS" {
+			return
+		}
+
 		res.Header().Add("content-type", "application/json")
 		auth := req.Header.Values("Authorization")
 		if len(auth) == 0 {

@@ -1,16 +1,20 @@
 import Animated from 'react-native-reanimated';
 
-export type RootStackParamList = {
-  DrawerNavigator: undefined;
+export type HomeStackParamList = {
+  Home: undefined;
   Note: undefined;
   AddNote: undefined;
-  NotFound: undefined;
-};
+}
 
 export type DrawerParamList = {
-  Home: undefined;
+  HomeStack: undefined;
   Setting: undefined;
 }
+
+export type RootStackParamList = {
+  Drawer: DrawerParamList;
+  NotFound: undefined;
+};
 
 export type TabOneParamList = {
   TabOneScreen: undefined;
