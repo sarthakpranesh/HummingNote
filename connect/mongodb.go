@@ -16,17 +16,17 @@ var (
 
 // Mongo returns a context.CancelFunc and connects to the Mongo Database
 func Mongo() context.CancelFunc {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
 	var err error
 	client, err = mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URL")))
 	if err != nil {
 		log.Fatalln("Unable to create mongo client!, Error:", err.Error())
-		return nil
+		return cancel
 	}
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatalln("Unable to Connect to mongo!, Error:", err.Error())
-		return nil
+		return cancel
 	}
 	log.Println("Database Successfully Connected")
 	return cancel
